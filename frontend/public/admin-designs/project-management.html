@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "inverse-surface": "#2e3132",
+                        "on-tertiary-container": "#39d36a",
+                        "tertiary": "#003c16",
+                        "primary-fixed": "#d2e4ff",
+                        "surface-variant": "#e1e3e4",
+                        "on-secondary-container": "#785a26",
+                        "on-error-container": "#93000a",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#a0c9ff",
+                        "surface-container-low": "#f3f4f5",
+                        "secondary-fixed": "#ffdeac",
+                        "secondary-fixed-dim": "#e8c082",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#42474f",
+                        "background": "#f8f9fa",
+                        "on-surface": "#191c1d",
+                        "secondary": "#775925",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "surface-tint": "#2d6197",
+                        "on-primary-container": "#8ebdf9",
+                        "on-primary-fixed": "#001c37",
+                        "outline-variant": "#c2c7d1",
+                        "primary-container": "#0f4c81",
+                        "on-primary": "#ffffff",
+                        "primary": "#00355f",
+                        "on-secondary-fixed-variant": "#5d420f",
+                        "inverse-on-surface": "#f0f1f2",
+                        "tertiary-fixed": "#6bff8f",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-primary-fixed-variant": "#07497d",
+                        "surface-container-high": "#e7e8e9",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "surface": "#f8f9fa",
+                        "surface-container": "#edeeef",
+                        "on-tertiary-fixed": "#002109",
+                        "inverse-primary": "#a0c9ff",
+                        "outline": "#727780",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-container": "#005623",
+                        "on-background": "#191c1d",
+                        "secondary-container": "#fdd494",
+                        "surface-bright": "#f8f9fa",
+                        "on-secondary-fixed": "#281900",
+                        "surface-dim": "#d9dadb"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        body { font-family: 'Inter', sans-serif; }
+        .tonal-shift { background-color: #0F4C81; }
+        .no-borders { border: none !important; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface antialiased font-body">
+<!-- SideNavBar (Shared Component) -->
+<aside class="fixed left-0 top-0 h-screen w-[280px] bg-[#0F4C81] dark:bg-slate-950 shadow-2xl z-50 flex flex-col justify-between py-8 h-full font-inter text-sm antialiased">
+<div class="flex flex-col gap-8">
+<!-- Brand Identity -->
+<div class="px-8 flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#C5A065] flex items-center justify-center text-white font-bold text-xl">M</div>
+<div>
+<h2 class="text-xl font-bold text-white tracking-tight leading-none">Mercury Wanda</h2>
+<p class="text-[10px] text-slate-300 uppercase tracking-widest mt-1">Editorial Ledger</p>
+</div>
+</div>
+<!-- Navigation Links -->
+<nav class="flex flex-col">
+<a class="flex items-center px-6 py-3 text-slate-300 hover:text-white transition-all duration-200 hover:bg-white/10" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="dashboard">dashboard</span>
+                    Dashboard
+                </a>
+<a class="flex items-center px-6 py-3 text-white border-l-4 border-[#C5A065] bg-white/5 font-medium" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="insights">insights</span>
+                    Analytics
+                </a>
+<a class="flex items-center px-6 py-3 text-slate-300 hover:text-white transition-all duration-200 hover:bg-white/10" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="payments">payments</span>
+                    Transactions
+                </a>
+<a class="flex items-center px-6 py-3 text-slate-300 hover:text-white transition-all duration-200 hover:bg-white/10" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="group">group</span>
+                    Customers
+                </a>
+<a class="flex items-center px-6 py-3 text-slate-300 hover:text-white transition-all duration-200 hover:bg-white/10" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="settings">settings</span>
+                    Settings
+                </a>
+</nav>
+</div>
+<!-- Footer Navigation -->
+<div class="flex flex-col">
+<a class="flex items-center px-6 py-3 text-slate-300 hover:text-white transition-all duration-200 hover:bg-white/10" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="logout">logout</span>
+                Logout
+            </a>
+</div>
+</aside>
+<!-- Main Content Wrapper -->
+<main class="ml-[280px] min-h-screen bg-surface-container-low">
+<!-- TopAppBar (Shared Component Content mapped to UI) -->
+<header class="h-16 flex justify-between items-center px-8 w-full bg-[#f8f9fa] dark:bg-slate-900 sticky top-0 z-40">
+<div class="flex items-center gap-6">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" data-icon="search">search</span>
+<input class="pl-10 pr-4 py-1.5 bg-surface-container-lowest border-none rounded-lg text-sm focus:ring-2 focus:ring-primary-fixed w-64 transition-all" placeholder="Search projects..." type="text"/>
+</div>
+<nav class="hidden md:flex gap-6 text-sm font-medium">
+<a class="text-slate-500 hover:text-[#0F4C81]" href="#">Dashboard</a>
+<a class="text-[#0F4C81] font-bold border-b-2 border-[#C5A065]" href="#">Reports</a>
+<a class="text-slate-500 hover:text-[#0F4C81]" href="#">Archive</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="w-10 h-10 flex items-center justify-center text-slate-500 hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+</button>
+<button class="flex items-center gap-2 pl-2 pr-1 py-1 rounded-full hover:bg-surface-container-high transition-colors">
+<span class="text-xs font-semibold text-on-surface">Wanda M.</span>
+<span class="material-symbols-outlined text-3xl" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</header>
+<!-- Editorial Content Canvas -->
+<div class="p-12 max-w-7xl mx-auto">
+<!-- Page Header Section -->
+<div class="flex justify-between items-end mb-12">
+<div>
+<h1 class="text-4xl font-extrabold text-primary tracking-tight font-headline">Quản lý Dự án</h1>
+<p class="text-slate-500 mt-2 font-medium">Editorial project ledger and portfolio management.</p>
+</div>
+<button class="bg-gradient-to-br from-primary to-primary-container text-white px-6 py-3 rounded-lg flex items-center gap-2 font-bold shadow-lg hover:shadow-xl transition-all active:scale-95">
+<span class="material-symbols-outlined" data-icon="add">add</span>
+                    + THÊM DỰ ÁN MỚI
+                </button>
+</div>
+<!-- Project Table Container (Editorial Sheet) -->
+<div class="bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-8 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-widest border-none">Thumbnail</th>
+<th class="px-6 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-widest border-none">Tiêu đề</th>
+<th class="px-6 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-widest border-none">Danh mục</th>
+<th class="px-6 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-widest border-none text-center">Tiêu biểu?</th>
+<th class="px-8 py-5 text-[11px] font-bold text-slate-400 uppercase tracking-widest border-none text-right">Hành động</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-surface-container-low">
+<!-- Row 1 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="px-8 py-4">
+<div class="w-16 h-12 rounded bg-slate-100 overflow-hidden shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Modern architectural blueprint with elegant typography and clean lines on high-quality paper texture" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAHl_JNJ2TkiHyS_u_K0P9ZEH7xO9SD--4B7royaF58JxTsvGXESJYu1Py1LlMo6wtP6Wu0aGEst0CTZHZdpUBGhNjxb9DwzuB8wm_BAypJqxqFL0AAnqgGK_BUtf8MmMENkQDXhSxN-Kat3ds9LPEg7yS_9KyX2BNEqB06lAHYHmtAQRwPWXcB9t4FiPFBs3wunBQj2svtR0H15OmGUpwfbIFTp8sgBzaShFNFXfETkATM2K1gFX-csN6UIPPWqiMfIqQVTiqSqtBs"/>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="block font-bold text-on-surface text-base group-hover:text-primary transition-colors">Bản tin Tài chính Q4</span>
+<span class="text-xs text-slate-400 font-medium">Cập nhật: 12/10/2023</span>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-slate-600">Editorial</td>
+<td class="px-6 py-4 text-center">
+<span class="material-symbols-outlined text-[#C5A065]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</td>
+<td class="px-8 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="w-9 h-9 flex items-center justify-center rounded-lg text-slate-400 hover:text-primary hover:bg-primary-fixed transition-all">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg text-slate-400 hover:text-error hover:bg-error-container transition-all">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="px-8 py-4">
+<div class="w-16 h-12 rounded bg-slate-100 overflow-hidden shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Wide shot of a minimalist office interior with large windows and soft natural morning light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAMcT7kV-uB1SngcCeag6HpZoHh67Xpvth2DgSmMfcNQ4d4-gdsSVF1eu1v_5r7FetLFeBQ6RuYqi1pOWqmGMRufAUhGlpzAAWXOdZSHdP1xt9BItqBv1HFLNtKtm1B5myw9a78b1vBDekvJoe6d99BF4B_g5FZMSxkeBEbPZsbcgaQ9vLilVCCe6iPA_AjAdWDjbtGz8gR9b2nxfraMaY0f-6f6WRmaESUOInYADSHHgehkp87q5VDRXdgUx2jeJasUIb-fX-qDCSQ"/>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="block font-bold text-on-surface text-base group-hover:text-primary transition-colors">Thiết kế Nhận diện Mercury</span>
+<span class="text-xs text-slate-400 font-medium">Cập nhật: 08/10/2023</span>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-slate-600">Branding</td>
+<td class="px-6 py-4 text-center">
+<span class="material-symbols-outlined text-slate-200" data-icon="star">star</span>
+</td>
+<td class="px-8 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="w-9 h-9 flex items-center justify-center rounded-lg text-slate-400 hover:text-primary hover:bg-primary-fixed transition-all">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg text-slate-400 hover:text-error hover:bg-error-container transition-all">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="px-8 py-4">
+<div class="w-16 h-12 rounded bg-slate-100 overflow-hidden shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Clean data visualization on a laptop screen in a professional business setting with shallow depth of field" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAf643uU_g4U_le9gst44Cb-HIUsVtW8_YiXQhuruIXQUTWEPuxSIuURXr6wpUsFKxvavOooGM1oKNhNi8Rq9LC23QtEegBIflGCs7byFYGMQ4_bZKzj3PXoWl3J1CJ4XIaqII-GT3ch16RGF-iFJrNodJX3lFFtTjCV5tat0peOXc3H_KksnD24IS-tGd9RrQVcVfguUW7hEm4Mk6yWegOYHpyh4-V213mGdmtIEz2qGTqXaoMhOnBEGruTZkW6C_fVsHNx6YR5kyC"/>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="block font-bold text-on-surface text-base group-hover:text-primary transition-colors">Báo cáo Thường niên 2023</span>
+<span class="text-xs text-slate-400 font-medium">Cập nhật: 01/10/2023</span>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-slate-600">Corporate</td>
+<td class="px-6 py-4 text-center">
+<span class="material-symbols-outlined text-[#C5A065]" data-icon="star" style="font-variation-settings: 'FILL' 1;">star</span>
+</td>
+<td class="px-8 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="w-9 h-9 flex items-center justify-center rounded-lg text-slate-400 hover:text-primary hover:bg-primary-fixed transition-all">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg text-slate-400 hover:text-error hover:bg-error-container transition-all">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 4 -->
+<tr class="hover:bg-surface-container-low/30 transition-colors group">
+<td class="px-8 py-4">
+<div class="w-16 h-12 rounded bg-slate-100 overflow-hidden shadow-sm">
+<img class="w-full h-full object-cover" data-alt="Top down view of financial spreadsheets and business charts with a luxury pen on high quality paper" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCJd4Eo1Jx0w5F-6N67iOtl5E0QX3VpOy3ld41To09GPFHwt33qkRJB3mB8B0ncWcn2o7UMqNvEqYj9v2lkPRanGoO-75D58kXMc4BtRVUcwryVT3IHUHz4K683GkYnxIV1OAqUlEGk4_UiBgyNGVGRG6exyTUszJ6js-fycQpY-wJ8_HkcxYH1KBWPjab8QzyFo3J1aR0pCNWbZjRG6CLVLNl3CQ4FrTnEitOOQQK3nZHNysY5jAFSBt2Y5Eh6fTsa5lMghoRcpivO"/>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="block font-bold text-on-surface text-base group-hover:text-primary transition-colors">Tạp chí Nội bộ Wanda</span>
+<span class="text-xs text-slate-400 font-medium">Cập nhật: 25/09/2023</span>
+</td>
+<td class="px-6 py-4 text-sm font-medium text-slate-600">Publication</td>
+<td class="px-6 py-4 text-center">
+<span class="material-symbols-outlined text-slate-200" data-icon="star">star</span>
+</td>
+<td class="px-8 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="w-9 h-9 flex items-center justify-center rounded-lg text-slate-400 hover:text-primary hover:bg-primary-fixed transition-all">
+<span class="material-symbols-outlined" data-icon="edit">edit</span>
+</button>
+<button class="w-9 h-9 flex items-center justify-center rounded-lg text-slate-400 hover:text-error hover:bg-error-container transition-all">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<!-- Pagination Section -->
+<div class="px-8 py-6 bg-surface-container-lowest flex items-center justify-between border-t border-surface-container-low">
+<span class="text-sm text-slate-500 font-medium">Hiển thị 4 trên 24 dự án</span>
+<div class="flex items-center gap-1">
+<button class="px-3 py-1 text-sm font-bold text-slate-400 hover:text-primary transition-colors flex items-center">
+<span class="material-symbols-outlined text-sm mr-1" data-icon="chevron_left">chevron_left</span> Previous
+                        </button>
+<button class="w-8 h-8 flex items-center justify-center text-sm font-bold rounded-lg bg-primary text-white shadow-md">1</button>
+<button class="w-8 h-8 flex items-center justify-center text-sm font-bold rounded-lg text-slate-600 hover:bg-surface-container-high transition-all">2</button>
+<button class="w-8 h-8 flex items-center justify-center text-sm font-bold rounded-lg text-slate-600 hover:bg-surface-container-high transition-all">3</button>
+<button class="px-3 py-1 text-sm font-bold text-slate-400 hover:text-primary transition-colors flex items-center">
+                            Next <span class="material-symbols-outlined text-sm ml-1" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Contextual Stats Grid (Bento Style) -->
+<div class="grid grid-cols-12 gap-6 mt-12">
+<div class="col-span-8 bg-surface-container-lowest p-8 rounded-xl shadow-sm border-l-4 border-secondary">
+<h3 class="text-lg font-bold text-primary mb-4">Hoạt động Dự án</h3>
+<div class="space-y-6">
+<div class="flex items-center gap-4">
+<div class="w-2 h-2 rounded-full bg-secondary"></div>
+<p class="text-sm text-slate-600 flex-1">Bản tin Tài chính Q4 vừa được cập nhật trạng thái "Hoàn thành".</p>
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">2h trước</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-2 h-2 rounded-full bg-slate-300"></div>
+<p class="text-sm text-slate-600 flex-1">Wanda M. đã bắt đầu thiết kế dự án "Editorial Concept 2024".</p>
+<span class="text-[10px] font-bold text-slate-400 uppercase tracking-tight">Hôm qua</span>
+</div>
+</div>
+</div>
+<div class="col-span-4 bg-primary text-white p-8 rounded-xl shadow-lg relative overflow-hidden group">
+<div class="absolute -right-4 -bottom-4 opacity-10 group-hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-[120px]" data-icon="auto_awesome">auto_awesome</span>
+</div>
+<h3 class="text-lg font-bold mb-2">Dự án Tiêu biểu</h3>
+<p class="text-sm text-white/70 mb-6">Bạn có 12 dự án đang được gắn sao tiêu biểu trên trang chủ Portfolio.</p>
+<button class="bg-white/10 hover:bg-white/20 px-4 py-2 rounded-lg text-sm font-bold transition-all backdrop-blur-sm border border-white/10">
+                        Xem chi tiết
+                    </button>
+</div>
+</div>
+</div>
+</main>
+</body></html>

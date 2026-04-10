@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Mercury Wanda - Quản lý Leads</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "inverse-surface": "#2e3132",
+                        "on-tertiary-container": "#39d36a",
+                        "tertiary": "#003c16",
+                        "primary-fixed": "#d2e4ff",
+                        "surface-variant": "#e1e3e4",
+                        "on-secondary-container": "#785a26",
+                        "on-error-container": "#93000a",
+                        "on-error": "#ffffff",
+                        "primary-fixed-dim": "#a0c9ff",
+                        "surface-container-low": "#f3f4f5",
+                        "secondary-fixed": "#ffdeac",
+                        "secondary-fixed-dim": "#e8c082",
+                        "on-secondary": "#ffffff",
+                        "on-surface-variant": "#42474f",
+                        "background": "#f8f9fa",
+                        "on-surface": "#191c1d",
+                        "secondary": "#C5A065",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#4ae176",
+                        "surface-tint": "#2d6197",
+                        "on-primary-container": "#8ebdf9",
+                        "on-primary-fixed": "#001c37",
+                        "outline-variant": "#c2c7d1",
+                        "primary-container": "#0f4c81",
+                        "on-primary": "#ffffff",
+                        "primary": "#00355f",
+                        "on-secondary-fixed-variant": "#5d420f",
+                        "inverse-on-surface": "#f0f1f2",
+                        "tertiary-fixed": "#6bff8f",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-primary-fixed-variant": "#07497d",
+                        "surface-container-high": "#e7e8e9",
+                        "on-tertiary-fixed-variant": "#005321",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "surface": "#f8f9fa",
+                        "surface-container": "#edeeef",
+                        "on-tertiary-fixed": "#002109",
+                        "inverse-primary": "#a0c9ff",
+                        "outline": "#727780",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary-container": "#005623",
+                        "on-background": "#191c1d",
+                        "secondary-container": "#fdd494",
+                        "surface-bright": "#f8f9fa",
+                        "on-secondary-fixed": "#281900",
+                        "surface-dim": "#d9dadb"
+                    },
+                    fontFamily: {
+                        "headline": ["Inter"],
+                        "body": ["Inter"],
+                        "label": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .tonal-shift { background-color: rgba(255, 255, 255, 0.02); }
+        .no-borders { border: none !important; }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .ghost-border { border: 1px solid rgba(194, 199, 209, 0.15); }
+    </style>
+</head>
+<body class="bg-surface font-body text-on-surface antialiased">
+<!-- SideNavBar -->
+<aside class="fixed left-0 top-0 h-screen w-[280px] bg-[#0F4C81] dark:bg-slate-950 flex flex-col justify-between py-8 shadow-2xl z-50">
+<div class="flex flex-col gap-8">
+<div class="px-8">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-white/10 flex items-center justify-center overflow-hidden">
+<img alt="Mercury Wanda Logo" data-alt="Minimalist geometric logo icon for a luxury editorial brand using deep navy and gold accents on a white background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIEa9H5Nm2FjZPXAmAPPHQhR9t-fMj8aoOZTinmzot3yexsU9ovvLBbWT99Ar7nNn9vSUzjulEoCDkxhf6bdRajAn2_X4alWpJXwmuwdLpMYOjPF5AG0s4-r98tTc8PipTCBh3YX0jWeFy1xf0Z4SNI6S6GpNKy3K7vnNKtJOMxOqUIW-Q4FIQvZLXCz3c160TD2_5HzUB285U3ALASBySL95N0AN7fch7Qso9cr1N1cQc9L1vFelFSLciEoGETX2oQLvpm8aR8g9C"/>
+</div>
+<div>
+<h1 class="text-xl font-bold text-white tracking-tight leading-none">Mercury Wanda</h1>
+<p class="text-[10px] text-slate-300 uppercase tracking-[0.2em] mt-1">Editorial Ledger</p>
+</div>
+</div>
+</div>
+<nav class="flex flex-col">
+<a class="flex items-center px-6 py-3 text-slate-300 hover:text-white transition-colors hover:bg-white/10" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="dashboard">dashboard</span>
+<span class="font-inter text-sm antialiased">Dashboard</span>
+</a>
+<a class="flex items-center px-6 py-3 text-white border-l-4 border-[#C5A065] bg-white/5" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="group">group</span>
+<span class="font-inter text-sm antialiased">Customers</span>
+</a>
+<a class="flex items-center px-6 py-3 text-slate-300 hover:text-white transition-colors hover:bg-white/10" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="insights">insights</span>
+<span class="font-inter text-sm antialiased">Analytics</span>
+</a>
+<a class="flex items-center px-6 py-3 text-slate-300 hover:text-white transition-colors hover:bg-white/10" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="payments">payments</span>
+<span class="font-inter text-sm antialiased">Transactions</span>
+</a>
+<a class="flex items-center px-6 py-3 text-slate-300 hover:text-white transition-colors hover:bg-white/10" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="settings">settings</span>
+<span class="font-inter text-sm antialiased">Settings</span>
+</a>
+</nav>
+<div class="px-6 mt-4">
+<button class="w-full bg-gradient-to-br from-[#00355f] to-[#0f4c81] text-white py-3 rounded-lg font-medium flex items-center justify-center gap-2 shadow-lg shadow-black/20 hover:scale-[1.02] transition-transform">
+<span class="material-symbols-outlined text-sm" data-icon="add">add</span>
+                    New Report
+                </button>
+</div>
+</div>
+<div class="flex flex-col border-t border-white/10 pt-4">
+<a class="flex items-center px-6 py-3 text-slate-300 hover:text-white transition-colors hover:bg-white/10" href="#">
+<span class="material-symbols-outlined mr-4" data-icon="logout">logout</span>
+<span class="font-inter text-sm antialiased">Logout</span>
+</a>
+</div>
+</aside>
+<!-- TopAppBar -->
+<header class="fixed top-0 right-0 w-[calc(100%-280px)] h-16 bg-[#f3f4f5] dark:bg-slate-800 flex justify-between items-center px-8 z-40">
+<div class="flex items-center gap-8 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" data-icon="search">search</span>
+<input class="w-full bg-surface-container-lowest border-none rounded-lg pl-10 pr-4 py-2 text-sm focus:ring-2 focus:ring-primary-fixed ghost-border transition-all" placeholder="Tìm kiếm tài liệu..." type="text"/>
+</div>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-slate-500 hover:text-[#0F4C81] transition-colors font-inter text-sm font-medium" href="#">Dashboard</a>
+<a class="text-[#0F4C81] font-bold border-b-2 border-[#C5A065] font-inter text-sm font-medium" href="#">Reports</a>
+<a class="text-slate-500 hover:text-[#0F4C81] transition-colors font-inter text-sm font-medium" href="#">Archive</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 text-slate-500 hover:bg-surface-container-high rounded-full transition-colors relative">
+<span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full border-2 border-[#f3f4f5]"></span>
+</button>
+<div class="h-8 w-[1px] bg-slate-200 mx-2"></div>
+<div class="flex items-center gap-3 cursor-pointer hover:bg-surface-container-high p-1 pr-3 rounded-full transition-colors">
+<div class="w-8 h-8 rounded-full bg-[#C5A065] flex items-center justify-center text-white font-bold text-xs">
+                    MW
+                </div>
+<span class="text-sm font-medium text-slate-700">Wanda Admin</span>
+</div>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pt-24 pl-[312px] pr-8 pb-12 min-h-screen bg-surface">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-10">
+<div>
+<nav class="flex gap-2 text-[10px] text-slate-400 uppercase tracking-widest mb-2">
+<span>Hệ thống</span>
+<span>/</span>
+<span class="text-secondary font-bold">Khách hàng</span>
+</nav>
+<h1 class="text-3xl font-extrabold text-on-surface tracking-tight">Quản lý Leads</h1>
+</div>
+<button class="bg-surface-container-lowest ghost-border px-5 py-2.5 rounded-lg flex items-center gap-2 hover:bg-white transition-all hover:shadow-sm">
+<span class="material-symbols-outlined text-primary" data-icon="download">download</span>
+<span class="font-medium text-sm text-primary">Xuất Excel (.csv)</span>
+</button>
+</div>
+<!-- Filter Bar -->
+<div class="bg-surface-container-lowest rounded-xl p-4 mb-8 flex flex-wrap items-center gap-4 shadow-sm border border-black/[0.03]">
+<div class="flex-1 min-w-[300px] relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" data-icon="search">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-lg pl-10 py-2.5 text-sm focus:ring-1 focus:ring-primary-fixed transition-all" placeholder="Tìm kiếm theo tên hoặc số điện thoại..." type="text"/>
+</div>
+<div class="w-48 relative">
+<select class="w-full bg-surface-container-low border-none rounded-lg pl-3 pr-10 py-2.5 text-sm focus:ring-1 focus:ring-primary-fixed appearance-none">
+<option value="">Tất cả trạng thái</option>
+<option value="new">Mới [New]</option>
+<option value="processing">Đang xử lý</option>
+<option value="closed">Đã đóng</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+<button class="bg-primary text-white px-6 py-2.5 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">Lọc dữ liệu</button>
+</div>
+<!-- Data Table Container -->
+<div class="bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden border border-black/[0.03]">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low/50">
+<th class="px-6 py-4 w-12">
+<input class="rounded text-primary focus:ring-primary border-slate-300" type="checkbox"/>
+</th>
+<th class="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest">Tên</th>
+<th class="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest">Số điện thoại</th>
+<th class="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest">Loại sự kiện</th>
+<th class="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest text-center">Trạng thái</th>
+<th class="px-6 py-4 text-[11px] font-bold text-slate-500 uppercase tracking-widest text-right">Thao tác</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-slate-100">
+<tr class="group hover:bg-surface-container-low/30 transition-colors">
+<td class="px-6 py-4">
+<input class="rounded text-primary focus:ring-primary border-slate-300" type="checkbox"/>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-primary font-bold text-[10px]">NH</div>
+<span class="font-semibold text-sm">Nguyễn Hoàng Nam</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600">0987 654 ***</td>
+<td class="px-6 py-4 text-sm text-slate-600">Hội thảo Editorial</td>
+<td class="px-6 py-4 text-center">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold bg-green-100 text-green-700 uppercase tracking-wider">New</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-slate-400 hover:text-primary hover:bg-primary-fixed rounded-lg transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-primary hover:bg-primary-fixed rounded-lg transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="group hover:bg-surface-container-low/30 transition-colors">
+<td class="px-6 py-4">
+<input class="rounded text-primary focus:ring-primary border-slate-300" type="checkbox"/>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-amber-50 flex items-center justify-center text-secondary font-bold text-[10px]">LT</div>
+<span class="font-semibold text-sm">Lê Thu Trang</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600">0912 345 ***</td>
+<td class="px-6 py-4 text-sm text-slate-600">Gala Dinner</td>
+<td class="px-6 py-4 text-center">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold bg-yellow-100 text-yellow-700 uppercase tracking-wider">Processing</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-slate-400 hover:text-primary hover:bg-primary-fixed rounded-lg transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-primary hover:bg-primary-fixed rounded-lg transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="group hover:bg-surface-container-low/30 transition-colors">
+<td class="px-6 py-4">
+<input class="rounded text-primary focus:ring-primary border-slate-300" type="checkbox"/>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-slate-100 flex items-center justify-center text-slate-500 font-bold text-[10px]">PH</div>
+<span class="font-semibold text-sm">Phan Văn Hiển</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600">0888 222 ***</td>
+<td class="px-6 py-4 text-sm text-slate-600">Private Party</td>
+<td class="px-6 py-4 text-center">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold bg-slate-100 text-slate-500 uppercase tracking-wider">Closed</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-slate-400 hover:text-primary hover:bg-primary-fixed rounded-lg transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-primary hover:bg-primary-fixed rounded-lg transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+</div>
+</td>
+</tr>
+<tr class="group hover:bg-surface-container-low/30 transition-colors">
+<td class="px-6 py-4">
+<input class="rounded text-primary focus:ring-primary border-slate-300" type="checkbox"/>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-primary font-bold text-[10px]">TM</div>
+<span class="font-semibold text-sm">Trần Minh</span>
+</div>
+</td>
+<td class="px-6 py-4 text-sm text-slate-600">0333 999 ***</td>
+<td class="px-6 py-4 text-sm text-slate-600">Launch Event</td>
+<td class="px-6 py-4 text-center">
+<span class="px-3 py-1 rounded-full text-[10px] font-bold bg-green-100 text-green-700 uppercase tracking-wider">New</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+<button class="p-2 text-slate-400 hover:text-primary hover:bg-primary-fixed rounded-lg transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="visibility">visibility</span>
+</button>
+<button class="p-2 text-slate-400 hover:text-primary hover:bg-primary-fixed rounded-lg transition-all">
+<span class="material-symbols-outlined text-[20px]" data-icon="edit">edit</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<!-- Pagination -->
+<div class="px-6 py-4 bg-surface-container-low/30 border-t border-slate-100 flex justify-between items-center">
+<p class="text-xs text-slate-500 font-medium">Hiển thị <span class="text-on-surface">1 - 4</span> của <span class="text-on-surface">120</span> kết quả</p>
+<div class="flex items-center gap-1">
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-white text-slate-400 hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[18px]" data-icon="chevron_left">chevron_left</span>
+</button>
+<button class="w-8 h-8 flex items-center justify-center rounded bg-primary text-white text-xs font-bold">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-white text-slate-500 hover:text-primary text-xs font-bold transition-all">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-white text-slate-500 hover:text-primary text-xs font-bold transition-all">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded hover:bg-white text-slate-400 hover:text-primary transition-all">
+<span class="material-symbols-outlined text-[18px]" data-icon="chevron_right">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Metric Bento Cards (Editorial Feel) -->
+<div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-black/[0.03] flex flex-col justify-between h-48 group hover:shadow-xl hover:shadow-primary/5 transition-all">
+<div class="flex justify-between items-start">
+<span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest">Tổng lượt Leads</span>
+<span class="material-symbols-outlined text-secondary" data-icon="trending_up">trending_up</span>
+</div>
+<div class="mt-auto">
+<h2 class="text-4xl font-extrabold tracking-tight text-on-surface">2,840</h2>
+<p class="text-xs text-green-600 font-medium mt-1 flex items-center gap-1">
+<span class="material-symbols-outlined text-sm" data-icon="arrow_upward">arrow_upward</span>
+                        12% so với tháng trước
+                    </p>
+</div>
+</div>
+<div class="bg-primary text-white p-6 rounded-xl shadow-lg shadow-primary/20 flex flex-col justify-between h-48 relative overflow-hidden">
+<div class="absolute -right-4 -bottom-4 opacity-10">
+<span class="material-symbols-outlined !text-[120px]" data-icon="auto_graph">auto_graph</span>
+</div>
+<span class="text-[11px] font-bold text-primary-fixed uppercase tracking-widest relative z-10">Hiệu suất chuyển đổi</span>
+<div class="mt-auto relative z-10">
+<h2 class="text-4xl font-extrabold tracking-tight">34.2%</h2>
+<div class="w-full bg-white/20 h-1 rounded-full mt-4 overflow-hidden">
+<div class="bg-secondary h-full w-[34%]"></div>
+</div>
+</div>
+</div>
+<div class="bg-white p-6 rounded-xl border border-black/[0.03] flex flex-col h-48">
+<span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest mb-4">Hoạt động gần đây</span>
+<div class="space-y-3">
+<div class="flex items-center gap-3">
+<div class="w-1.5 h-1.5 rounded-full bg-green-500"></div>
+<p class="text-[13px] text-slate-600 truncate"><span class="font-bold text-on-surface">Nguyễn Nam</span> vừa đăng ký tư vấn</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-1.5 h-1.5 rounded-full bg-yellow-500"></div>
+<p class="text-[13px] text-slate-600 truncate"><span class="font-bold text-on-surface">Trần Minh</span> đang được xử lý</p>
+</div>
+<div class="flex items-center gap-3">
+<div class="w-1.5 h-1.5 rounded-full bg-slate-300"></div>
+<p class="text-[13px] text-slate-600 truncate"><span class="font-bold text-on-surface">Admin</span> đã xuất báo cáo quý 3</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</body></html>

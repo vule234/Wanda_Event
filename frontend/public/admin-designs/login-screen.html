@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+
+<html class="light" lang="vi"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Đăng nhập Admin | Mercury Wanda</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "inverse-surface": "#2e3132",
+              "on-tertiary-container": "#39d36a",
+              "tertiary": "#003c16",
+              "primary-fixed": "#d2e4ff",
+              "surface-variant": "#e1e3e4",
+              "on-secondary-container": "#785a26",
+              "on-error-container": "#93000a",
+              "on-error": "#ffffff",
+              "primary-fixed-dim": "#a0c9ff",
+              "surface-container-low": "#f3f4f5",
+              "secondary-fixed": "#ffdeac",
+              "secondary-fixed-dim": "#e8c082",
+              "on-secondary": "#ffffff",
+              "on-surface-variant": "#42474f",
+              "background": "#f8f9fa",
+              "on-surface": "#191c1d",
+              "secondary": "#775925",
+              "on-tertiary": "#ffffff",
+              "tertiary-fixed-dim": "#4ae176",
+              "surface-tint": "#2d6197",
+              "on-primary-container": "#8ebdf9",
+              "on-primary-fixed": "#001c37",
+              "outline-variant": "#c2c7d1",
+              "primary-container": "#0f4c81",
+              "on-primary": "#ffffff",
+              "primary": "#00355f",
+              "on-secondary-fixed-variant": "#5d420f",
+              "inverse-on-surface": "#f0f1f2",
+              "tertiary-fixed": "#6bff8f",
+              "surface-container-highest": "#e1e3e4",
+              "on-primary-fixed-variant": "#07497d",
+              "surface-container-high": "#e7e8e9",
+              "on-tertiary-fixed-variant": "#005321",
+              "error": "#ba1a1a",
+              "error-container": "#ffdad6",
+              "surface": "#f8f9fa",
+              "surface-container": "#edeeef",
+              "on-tertiary-fixed": "#002109",
+              "inverse-primary": "#a0c9ff",
+              "outline": "#727780",
+              "surface-container-lowest": "#ffffff",
+              "tertiary-container": "#005623",
+              "on-background": "#191c1d",
+              "secondary-container": "#fdd494",
+              "surface-bright": "#f8f9fa",
+              "on-secondary-fixed": "#281900",
+              "surface-dim": "#d9dadb"
+            },
+            fontFamily: {
+              "headline": ["Inter"],
+              "body": ["Inter"],
+              "label": ["Inter"]
+            },
+            borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
+          },
+        },
+      }
+    </script>
+<style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+        }
+        .editorial-shadow {
+            box-shadow: 0 20px 40px -10px rgba(25, 28, 29, 0.06);
+        }
+        .primary-gradient {
+            background: linear-gradient(135deg, #00355f 0%, #0f4c81 100%);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen text-on-surface">
+<!-- Login Container -->
+<main class="w-full max-w-md px-6 py-12">
+<!-- Center Card -->
+<div class="glass-card surface-container-lowest editorial-shadow rounded-xl p-8 md:p-10 flex flex-col items-center">
+<!-- Logo Section -->
+<div class="mb-8 flex flex-col items-center gap-2">
+<div class="w-16 h-16 rounded-full primary-gradient flex items-center justify-center text-white mb-4">
+<span class="material-symbols-outlined text-4xl" data-icon="auto_stories">auto_stories</span>
+</div>
+<h1 class="text-2xl font-extrabold tracking-tight text-primary-container font-headline">
+                    Mercury Wanda
+                </h1>
+<p class="text-xs font-medium uppercase tracking-[0.15em] text-secondary label-sm">
+                    Editorial Ledger
+                </p>
+</div>
+<!-- Title -->
+<div class="w-full mb-8">
+<h2 class="text-xl font-bold text-on-surface tracking-tight mb-2">
+                    Đăng nhập Admin
+                </h2>
+<div class="h-1 w-12 bg-secondary rounded-full"></div>
+</div>
+<!-- Form -->
+<form class="w-full space-y-6" onsubmit="return false;">
+<!-- Email Field -->
+<div class="space-y-2">
+<label class="block text-sm font-semibold text-on-surface-variant" for="email">
+                        Email
+                    </label>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-outline">
+<span class="material-symbols-outlined text-[20px]" data-icon="mail">mail</span>
+</div>
+<input class="block w-full pl-11 pr-4 py-3 bg-surface-container-lowest border border-outline-variant/15 rounded-lg focus:ring-2 focus:ring-primary-fixed focus:border-primary transition-all outline-none text-body-md" id="email" name="email" placeholder="admin@mercurywanda.com" type="email"/>
+</div>
+</div>
+<!-- Password Field -->
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<label class="block text-sm font-semibold text-on-surface-variant" for="password">
+                            Mật khẩu
+                        </label>
+<a class="text-xs font-medium text-secondary hover:underline" href="#">Quên mật khẩu?</a>
+</div>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-outline">
+<span class="material-symbols-outlined text-[20px]" data-icon="lock">lock</span>
+</div>
+<input class="block w-full pl-11 pr-4 py-3 bg-surface-container-lowest border border-outline-variant/15 rounded-lg focus:ring-2 focus:ring-primary-fixed focus:border-primary transition-all outline-none text-body-md" id="password" name="password" placeholder="••••••••" type="password"/>
+</div>
+</div>
+<!-- Remember Me -->
+<div class="flex items-center">
+<input class="w-4 h-4 text-primary border-outline-variant rounded focus:ring-primary focus:ring-offset-0" id="remember" type="checkbox"/>
+<label class="ml-2 text-sm text-on-surface-variant font-medium" for="remember">
+                        Ghi nhớ đăng nhập
+                    </label>
+</div>
+<!-- Submit Button -->
+<button class="w-full primary-gradient text-on-primary py-4 rounded-lg font-bold tracking-widest text-sm hover:opacity-95 active:scale-[0.98] transition-all shadow-lg shadow-primary-container/20 uppercase" type="submit">
+                    ĐĂNG NHẬP
+                </button>
+</form>
+<!-- Footer Note -->
+<div class="mt-10 pt-8 border-t border-outline-variant/10 w-full text-center">
+<p class="text-xs text-outline font-medium">
+                    Hệ thống quản trị nội dung bảo mật cao. <br/> 
+                    © 2024 Mercury Wanda Editorial.
+                </p>
+</div>
+</div>
+<!-- Background Aesthetic Elements -->
+<div class="fixed top-0 right-0 -z-10 opacity-10">
+<svg fill="none" height="400" viewbox="0 0 400 400" width="400" xmlns="http://www.w3.org/2000/svg">
+<circle cx="400" cy="0" fill="url(#paint0_linear)" r="400"></circle>
+<defs>
+<lineargradient gradientunits="userSpaceOnUse" id="paint0_linear" x1="400" x2="0" y1="0" y2="400">
+<stop stop-color="#C5A065"></stop>
+<stop offset="1" stop-color="#0F4C81"></stop>
+</lineargradient>
+</defs>
+</svg>
+</div>
+<div class="fixed bottom-0 left-0 -z-10 opacity-5">
+<div class="w-[600px] h-[600px] bg-primary-container rounded-full blur-[120px]"></div>
+</div>
+</main>
+</body></html>

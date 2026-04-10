@@ -1,0 +1,47 @@
+# Root workspace ignore rules for Wanda Event
+
+# Dependency directories
+**/node_modules/
+
+# Build artifacts
+frontend/.next/
+frontend/out/
+frontend/build/
+backend/dist/
+backend/build/
+**/coverage/
+
+# Environment files and secrets
+frontend/.env*
+!frontend/.env.example
+backend/.env
+backend/.env.*
+!backend/.env.example
+backend/ADMIN_CREDENTIALS.txt
+*.pem
+*.key
+*.crt
+
+# Platform and deployment files
+frontend/.vercel/
+.vercel/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# IDE / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# TypeScript / cache
+**/*.tsbuildinfo
+
+# Local scratch / temp
+.tmp/
+tmp/
