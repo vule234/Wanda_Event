@@ -9,6 +9,8 @@ export const FloatingCTA = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
   const hasAutoOpenedRef = useRef(false);
+  const modalCardRef = useRef<HTMLDivElement | null>(null);
+  const triggerButtonRef = useRef<HTMLButtonElement | null>(null);
 
   const playClickSound = useCallback(() => {
     if (typeof window === 'undefined') return;
@@ -96,16 +98,45 @@ export const FloatingCTA = () => {
     };
   }, [isOpen, isTyping]);
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const isMobileViewport = () => window.innerWidth < 768;
+
+    const handleOutsideClose = (event: PointerEvent | TouchEvent) => {
+      if (!isMobileViewport()) return;
+
+      const target = event.target as Node | null;
+      const modalNode = modalCardRef.current;
+      const triggerNode = triggerButtonRef.current;
+
+      if (!target || !modalNode) return;
+      if (modalNode.contains(target)) return;
+      if (triggerNode?.contains(target)) return;
+
+      closeModal();
+    };
+
+    document.addEventListener('pointerdown', handleOutsideClose);
+    document.addEventListener('touchstart', handleOutsideClose, { passive: true });
+
+    return () => {
+      document.removeEventListener('pointerdown', handleOutsideClose);
+      document.removeEventListener('touchstart', handleOutsideClose);
+    };
+  }, [closeModal, isOpen]);
+
   return (
     <>
       <div className="fixed bottom-4 right-4 z-40 flex max-w-[calc(100vw-1rem)] flex-col items-end gap-3 sm:bottom-5 sm:right-5 md:bottom-6 md:right-6">
         {isOpen ? (
-          <div className="w-[min(24rem,calc(100vw-1rem))] animate-[chatSlideUp_420ms_cubic-bezier(0.22,1,0.36,1)] sm:w-[24rem]">
+          <div className="relative z-20 w-[min(24rem,calc(100vw-1rem))] animate-[chatSlideUp_420ms_cubic-bezier(0.22,1,0.36,1)] sm:w-[24rem]">
             <div
+              ref={modalCardRef}
               id="wanda-premium-contact-modal"
               className="overflow-hidden rounded-[1.7rem] rounded-br-md border border-white/70 bg-white/96 shadow-[0_30px_70px_-24px_rgba(15,23,42,0.28)] backdrop-blur-xl"
             >
-              <div className="flex items-center justify-between border-b border-slate-100/90 bg-[linear-gradient(135deg,#f8fafc_0%,#ffffff_100%)] px-4 py-3 sm:px-5">
+              <div className="relative border-b border-slate-100/90 bg-[linear-gradient(135deg,#f8fafc_0%,#ffffff_100%)] px-4 py-3 pr-20 sm:px-5 sm:pr-24">
                 <div className="flex min-w-0 items-center gap-3">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-[0_10px_24px_rgba(0,17,58,0.22)]">
                     <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -122,16 +153,24 @@ export const FloatingCTA = () => {
                     <p className="text-xs text-emerald-600">Đang hoạt động</p>
                   </div>
                 </div>
+
                 <button
                   id="wanda-premium-contact-close"
                   type="button"
-                  onClick={closeModal}
-                  className="inline-flex h-9 w-9 items-center justify-center rounded-full text-slate-400 transition-all duration-200 hover:bg-slate-100 hover:text-slate-700 focus:outline-none focus:ring-2 focus:ring-slate-300"
-                  aria-label="Đóng hộp thoại liên hệ"
+                  onMouseDown={closeModal}
+                  onTouchStart={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    closeModal();
+                  }}
+                  className="absolute inset-y-0 right-0 z-30 flex w-[72px] items-center justify-center rounded-l-[1.2rem] bg-transparent text-slate-500 transition-all duration-200 active:bg-slate-100/90 focus:outline-none focus:ring-2 focus:ring-slate-300 sm:w-[88px]"
+                  aria-label="Close"
                 >
-                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 6l12 12M18 6L6 18" />
-                  </svg>
+                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow-[0_8px_20px_rgba(15,23,42,0.08)]">
+                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 6l12 12M18 6L6 18" />
+                    </svg>
+                  </span>
                 </button>
               </div>
 
@@ -169,33 +208,43 @@ export const FloatingCTA = () => {
                 >
                   Gọi hotline ngay
                 </a>
+                <button
+                  type="button"
+                  onClick={closeModal}
+                  className="inline-flex w-full items-center justify-center rounded-full border border-slate-200 bg-white px-5 py-3 text-sm font-semibold text-slate-600 transition-all duration-200 active:bg-slate-100"
+                >
+                  Đóng cửa sổ chat
+                </button>
               </div>
             </div>
           </div>
         ) : null}
 
-        <button
-          id="floating-premium-contact-trigger"
-          type="button"
-          onClick={() => openModal(true)}
-          aria-haspopup="dialog"
-          aria-expanded={isOpen}
-          aria-controls="wanda-premium-contact-modal"
-          className="group relative flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-[0_18px_40px_rgba(0,17,58,0.28)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_52px_rgba(0,17,58,0.34)] focus:outline-none focus:ring-2 focus:ring-primary/30 sm:h-15 sm:w-15"
-        >
-          <span className="pointer-events-none absolute -inset-1 rounded-full border border-primary/25 animate-[ping_2.8s_ease-out_infinite]" />
-          <span className="pointer-events-none absolute inset-0 rounded-full shadow-[0_0_0_0_rgba(0,17,58,0.18)] animate-[pulse_2.6s_ease-in-out_infinite]" />
-          <span className="relative flex h-14 w-14 items-center justify-center rounded-full animate-[wiggle_3.4s_ease-in-out_infinite] group-hover:animate-none sm:h-15 sm:w-15">
-            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={1.8}
-                d="M8 10h8M8 14h5m7-2c0 4.418-4.03 8-9 8a9.94 9.94 0 01-4.25-.939L3 20l1.196-3.388C3.432 15.29 3 13.691 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
-              />
-            </svg>
-          </span>
-        </button>
+        {!isOpen ? (
+          <button
+            ref={triggerButtonRef}
+            id="floating-premium-contact-trigger"
+            type="button"
+            onClick={() => openModal(true)}
+            aria-haspopup="dialog"
+            aria-expanded={isOpen}
+            aria-controls="wanda-premium-contact-modal"
+            className="group relative z-10 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-[0_18px_40px_rgba(0,17,58,0.28)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_52px_rgba(0,17,58,0.34)] focus:outline-none focus:ring-2 focus:ring-primary/30 sm:h-15 sm:w-15"
+          >
+            <span className="pointer-events-none absolute -inset-1 rounded-full border border-primary/25 animate-[ping_2.8s_ease-out_infinite]" />
+            <span className="pointer-events-none absolute inset-0 rounded-full shadow-[0_0_0_0_rgba(0,17,58,0.18)] animate-[pulse_2.6s_ease-in-out_infinite]" />
+            <span className="relative flex h-14 w-14 items-center justify-center rounded-full animate-[wiggle_3.4s_ease-in-out_infinite] group-hover:animate-none sm:h-15 sm:w-15">
+              <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={1.8}
+                  d="M8 10h8M8 14h5m7-2c0 4.418-4.03 8-9 8a9.94 9.94 0 01-4.25-.939L3 20l1.196-3.388C3.432 15.29 3 13.691 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                />
+              </svg>
+            </span>
+          </button>
+        ) : null}
       </div>
 
       <style jsx>{`
