@@ -274,13 +274,19 @@ export default function ProjectsPage() {
               ? 'Ngôi sao sẽ sáng lên và project sẽ được thêm vào danh sách nổi bật.'
               : '';
 
+  const isSingleFeatureConfirmAction =
+    confirmAction?.type === 'feature-single' || confirmAction?.type === 'unfeature-single';
+  const isConfirmActionFeaturing =
+    bulkAction === 'feature' ||
+    (isSingleFeatureConfirmAction && featuringIds.includes(String(confirmAction.project.id)));
+
   const confirmActionLabel =
     confirmAction?.type === 'bulk-delete' || confirmAction?.type === 'delete-single'
       ? bulkAction === 'delete'
         ? 'Đang xoá...'
         : 'Xác nhận xoá'
-      : confirmAction?.type === 'bulk-feature' || confirmAction?.type === 'feature-single' || confirmAction?.type === 'unfeature-single'
-        ? bulkAction === 'feature' || (confirmAction?.project && featuringIds.includes(String(confirmAction.project.id)))
+      : confirmAction?.type === 'bulk-feature' || isSingleFeatureConfirmAction
+        ? isConfirmActionFeaturing
           ? 'Đang cập nhật...'
           : confirmAction?.type === 'unfeature-single'
             ? 'Bỏ nổi bật'
