@@ -103,7 +103,6 @@ export default function ProjectDetailPage() {
             <div className="h-full w-full bg-gradient-to-br from-slate-300 via-slate-100 to-white" />
           )}
           <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/45 to-slate-950/15" />
-          <div className={`absolute inset-x-0 top-0 h-40 bg-gradient-to-b ${brandConfig.accentClass}`} />
 
           <div className="absolute inset-0 flex flex-col justify-end px-6 pb-10 md:px-16 md:pb-16">
             <div className="mx-auto flex w-full max-w-7xl flex-col gap-8 xl:flex-row xl:items-end xl:justify-between">
