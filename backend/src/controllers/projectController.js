@@ -19,6 +19,44 @@ function normalizeProjectPayload(input = {}) {
   return payload;
 }
 
+async function getNextFeaturedOrder() {
+  const { data, error } = await supabaseAdmin
+    .from('projects')
+    .select('featured_order')
+    .eq('is_featured', true)
+    .order('featured_order', { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
+  return (data?.featured_order || 0) + 1;
+}
+
+async function hydrateFeaturedOrder(payload, existingProject = null) {
+  if (!payload.is_featured) {
+    return payload;
+  }
+
+  if (payload.featured_order) {
+    return payload;
+  }
+
+  if (existingProject?.is_featured && existingProject?.featured_order) {
+    return {
+      ...payload,
+      featured_order: existingProject.featured_order,
+    };
+  }
+
+  return {
+    ...payload,
+    featured_order: await getNextFeaturedOrder(),
+  };
+}
+
 async function ensureProjectSlug(projectData) {
   if (projectData.slug) {
     return projectData;
@@ -176,7 +214,7 @@ async function getAdminProjectById(req, res) {
 
 async function createProject(req, res) {
   try {
-    const normalized = normalizeProjectPayload(req.validatedData);
+    const normalized = await hydrateFeaturedOrder(normalizeProjectPayload(req.validatedData));
     const projectData = await ensureProjectSlug(normalized);
 
     const { data, error } = await supabaseAdmin.from('projects').insert([projectData]).select().single();
@@ -200,7 +238,13 @@ async function createProject(req, res) {
 async function updateProject(req, res) {
   try {
     const { id } = req.params;
-    const normalized = normalizeProjectPayload(req.validatedData);
+    const { data: existingProject, error: existingError } = await supabaseAdmin.from('projects').select('*').eq('id', id).single();
+
+    if (existingError || !existingProject) {
+      return res.status(404).json({ success: false, message: 'Không tìm thấy dự án để cập nhật' });
+    }
+
+    const normalized = await hydrateFeaturedOrder(normalizeProjectPayload(req.validatedData), existingProject);
     const projectData = await ensureProjectSlug(normalized);
 
     const { data, error } = await supabaseAdmin

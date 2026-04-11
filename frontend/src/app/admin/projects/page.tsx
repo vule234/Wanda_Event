@@ -23,7 +23,7 @@ export default function ProjectsPage() {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [deletingIds, setDeletingIds] = useState<string[]>([]);
   const [featuringIds, setFeaturingIds] = useState<string[]>([]);
-  const [bulkAction, setBulkAction] = useState<'delete' | 'feature' | null>(null);
+  const [bulkAction, setBulkAction] = useState<'delete' | null>(null);
 
   useEffect(() => {
     const loadProjects = async () => {
@@ -165,51 +165,7 @@ export default function ProjectsPage() {
     }
   };
 
-  const handleBulkFeature = async () => {
-    const projectsToFeature = selectedProjects.filter((project) => !project.is_featured);
 
-    if (projectsToFeature.length === 0) {
-      setError('Các project đã chọn đều đang ở trạng thái nổi bật.');
-      return;
-    }
-
-    const confirmed = window.confirm(
-      `Thêm ${projectsToFeature.length} project vào danh sách nổi bật? Hệ thống sẽ tự gán featured order tiếp theo.`,
-    );
-
-    if (!confirmed) return;
-
-    setError('');
-    setBulkAction('feature');
-
-    const currentMaxOrder = projects.reduce((max, project) => {
-      if (!project.is_featured || !project.featured_order) return max;
-      return Math.max(max, project.featured_order);
-    }, 0);
-
-    try {
-      const updatedProjects = await Promise.all(
-        projectsToFeature.map(async (project, index) => {
-          const response = await apiClient.updateProject(String(project.id), {
-            is_featured: true,
-            featured_order: currentMaxOrder + index + 1,
-            featured_note: project.featured_note || undefined,
-          });
-
-          return response.data;
-        }),
-      );
-
-      const updatedMap = new Map(updatedProjects.map((project) => [String(project.id), project]));
-      setProjects((current) =>
-        current.map((project) => updatedMap.get(String(project.id)) ?? project),
-      );
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Không thể thêm các project đã chọn vào nổi bật');
-    } finally {
-      setBulkAction(null);
-    }
-  };
 
   const handleFeatureProject = async (project: Project) => {
     const projectId = String(project.id);
@@ -372,19 +328,10 @@ export default function ProjectsPage() {
             <div className="flex flex-col gap-3 rounded-[20px] border border-[#d9e9ff] bg-[linear-gradient(135deg,#eff6ff_0%,#ffffff_100%)] p-4 md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-sm font-semibold text-[#0F4C81]">Đã chọn {selectedProjects.length} project</p>
-                <p className="mt-1 text-xs text-slate-500">Bạn có thể xoá hàng loạt hoặc thêm nhanh các mục này vào danh sách nổi bật.</p>
+                <p className="mt-1 text-xs text-slate-500">Bạn có thể xoá nhanh các mục đang chọn.</p>
               </div>
 
               <div className="flex flex-wrap gap-2">
-                <button
-                  id="projects-bulk-feature"
-                  onClick={() => void handleBulkFeature()}
-                  disabled={bulkAction !== null}
-                  className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-800 transition hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  <span className="material-symbols-outlined text-base">star</span>
-                  {bulkAction === 'feature' ? 'Đang thêm nổi bật...' : 'Thêm nổi bật'}
-                </button>
                 <button
                   id="projects-bulk-delete"
                   onClick={() => void handleBulkDelete()}

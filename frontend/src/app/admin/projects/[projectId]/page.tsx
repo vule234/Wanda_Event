@@ -31,8 +31,6 @@ interface ProjectFormData {
   thumbnail: string;
   galleryText: string;
   is_featured: boolean;
-  featured_order: string;
-  featured_note: string;
 }
 
 const sanitizeStorageSegment = (value: string, fallback = 'file') => {
@@ -71,8 +69,6 @@ export default function ProjectFormPage() {
     thumbnail: '',
     galleryText: '',
     is_featured: false,
-    featured_order: '',
-    featured_note: '',
   });
   const [loading, setLoading] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -106,8 +102,6 @@ export default function ProjectFormPage() {
             thumbnail: data.thumbnail || '',
             galleryText: Array.isArray(data.gallery) ? data.gallery.join('\n') : '',
             is_featured: Boolean(data.is_featured),
-            featured_order: data.featured_order ? String(data.featured_order) : '',
-            featured_note: data.featured_note || '',
           });
           setThumbnailPreview(data.thumbnail || '');
         }
@@ -169,7 +163,6 @@ export default function ProjectFormPage() {
     setFormData((prev) => ({
       ...prev,
       [name]: checked,
-      ...(name === 'is_featured' && !checked ? { featured_order: '', featured_note: '' } : {}),
     }));
   };
 
@@ -208,15 +201,11 @@ export default function ProjectFormPage() {
       return;
     }
 
-    if (formData.is_featured && !formData.featured_order.trim()) {
-      setError('Project nổi bật cần có thứ tự hiển thị.');
-      return;
-    }
 
     setSaving(true);
 
     try {
-      let slug = sanitizeSlugInput(formData.slug.trim()) || undefined;
+      const slug = sanitizeSlugInput(formData.slug.trim()) || undefined;
 
       let thumbnailUrl = formData.thumbnail;
       if (thumbnailFile) {
@@ -247,8 +236,6 @@ export default function ProjectFormPage() {
         thumbnail: thumbnailUrl || null,
         gallery: galleryUrls.length > 0 ? galleryUrls : null,
         is_featured: formData.is_featured,
-        featured_order: formData.is_featured ? Number(formData.featured_order) : null,
-        featured_note: formData.is_featured ? formData.featured_note.trim() || null : null,
       };
 
       if (isNewProject) {
@@ -455,22 +442,9 @@ export default function ProjectFormPage() {
 
             <div className="md:col-span-2 rounded-[24px] border border-[#e4edf8] bg-[#f8fbff] p-5">
               <label className="inline-flex cursor-pointer items-center gap-3">
-                <input type="checkbox" name="is_featured" checked={formData.is_featured} onChange={handleCheckboxChange} className="h-4 w-4" />
+                <input id="project-is-featured" type="checkbox" name="is_featured" checked={formData.is_featured} onChange={handleCheckboxChange} className="h-4 w-4" />
                 <span className="text-sm font-semibold text-[#111827]">Hiển thị nổi bật trên public site</span>
               </label>
-
-              {formData.is_featured && (
-                <div className="mt-5 grid gap-5 md:grid-cols-2">
-                  <div>
-                    <label className="mb-2 block text-sm font-semibold text-[#42474f]">Featured order *</label>
-                    <input id="project-featured-order" name="featured_order" type="number" min="1" value={formData.featured_order} onChange={handleInputChange} className="w-full rounded-2xl border border-[#dce6f2] bg-white px-4 py-3 outline-none transition focus:border-[#00355f] focus:ring-2 focus:ring-[#d2e4ff]" />
-                  </div>
-                  <div>
-                    <label className="mb-2 block text-sm font-semibold text-[#42474f]">Featured note nội bộ</label>
-                    <textarea id="project-featured-note" name="featured_note" value={formData.featured_note} onChange={handleInputChange} rows={4} className="w-full resize-none rounded-2xl border border-[#dce6f2] bg-white px-4 py-3 outline-none transition focus:border-[#00355f] focus:ring-2 focus:ring-[#d2e4ff]" />
-                  </div>
-                </div>
-              )}
             </div>
           </div>
         </section>
