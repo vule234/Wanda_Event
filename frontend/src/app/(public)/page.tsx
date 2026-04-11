@@ -293,43 +293,44 @@ export default function HomePage() {
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: index * 0.06 }}
                       viewport={{ once: true, amount: 0.15 }}
-                      className="group touch-hover-reset relative mb-6 break-inside-avoid overflow-hidden rounded-[1.9rem] shadow-[0_20px_60px_-40px_rgba(0,17,58,0.25)] transition-all duration-700 hover:-translate-y-1 hover:shadow-[0_30px_80px_-32px_rgba(0,17,58,0.35)]"
+                      className="group touch-hover-reset mb-6 break-inside-avoid"
                       style={{ minHeight: `${minHeight}px` }}
                     >
-                      <Link href={getProjectHref(project)} className="interactive-card touch-manipulation block h-full rounded-[1.9rem] focus:outline-none focus:ring-2 focus:ring-primary/30">
-                        <div className="pointer-events-none absolute inset-0">
-                          {project.thumbnail ? (
-                            <img
-                              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.08]"
-                              src={project.thumbnail}
-                              alt={project.title}
-                              loading="lazy"
-                            />
-                          ) : (
-                            <div className="h-full w-full bg-[radial-gradient(circle_at_top_left,rgba(254,214,91,0.18),transparent_32%),linear-gradient(135deg,rgba(0,17,58,0.12),rgba(0,17,58,0.04))]" />
-                          )}
-                        </div>
+                      <Link href={getProjectHref(project)} className="interactive-card touch-manipulation block h-full rounded-[30px] focus:outline-none focus:ring-2 focus:ring-[#0f4c81]/25">
+                        <div className="relative h-full overflow-hidden rounded-[30px] border border-white/70 bg-white/80 shadow-[0_22px_65px_-30px_rgba(15,23,42,0.22)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_30px_80px_-34px_rgba(15,76,129,0.32)]">
+                          <div className="relative h-full min-h-[320px] overflow-hidden bg-slate-200">
+                            {project.thumbnail ? (
+                              <img
+                                className="pointer-events-none h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                src={project.thumbnail}
+                                alt={project.title}
+                                loading="lazy"
+                              />
+                            ) : (
+                              <div className="h-full w-full bg-gradient-to-br from-slate-200 via-slate-100 to-white" />
+                            )}
 
-                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/34 to-transparent transition-all duration-700 group-hover:from-primary/98 group-hover:via-primary/50" />
+                            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/16 to-transparent" />
+                            <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-sky-200/65 via-sky-100/10 to-transparent" />
 
-                        <div className="absolute inset-0 flex flex-col justify-between p-5 sm:p-6">
-                          <div className="flex items-start justify-between gap-4">
-                            <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[9px] font-medium uppercase tracking-[0.3em] text-white/70 backdrop-blur-sm">
-                              {categoryLabel}
-                            </span>
-                            <span className="pointer-events-none flex h-11 w-11 items-center justify-center rounded-full border border-white/18 bg-slate-950/24 text-white/86 backdrop-blur-md transition-transform duration-500 group-hover:-translate-y-1 group-hover:translate-x-1">
-                              <span className="material-symbols-outlined">arrow_outward</span>
-                            </span>
-                          </div>
+                            <div className="absolute left-5 right-5 top-5 flex items-start justify-between gap-4">
+                              <span className="rounded-full border border-white/25 bg-white/14 px-3 py-1.5 text-[10px] uppercase tracking-[0.24em] text-white backdrop-blur-md">
+                                {categoryLabel}
+                              </span>
+                              <div className="pointer-events-none flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-slate-950/28 text-white/90 backdrop-blur-md transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+                                <span className="material-symbols-outlined">arrow_outward</span>
+                              </div>
+                            </div>
 
-                          <div className="transition-transform duration-700 group-hover:-translate-y-1">
-                            <p className="text-[10px] uppercase tracking-[0.28em] text-white/60">Wanda Event</p>
-                            <h3 className="mt-3 text-[1.4rem] font-semibold leading-tight tracking-tight text-white drop-shadow-lg transition group-hover:text-secondary-fixed-dim md:text-[1.7rem]">
-                              {project.title}
-                            </h3>
-                            <p className="mt-3 text-sm leading-7 text-white/78">
-                              {project.venue || categoryLabel}
-                            </p>
+                            <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                              <p className="text-[10px] uppercase tracking-[0.28em] text-white/60">Wanda Event</p>
+                              <h3 className="mt-3 text-2xl font-semibold leading-tight tracking-tight drop-shadow-sm">
+                                {project.title}
+                              </h3>
+                              <p className="mt-3 text-sm text-white/78">
+                                {project.venue || categoryLabel}
+                              </p>
+                            </div>
                           </div>
                         </div>
                       </Link>
