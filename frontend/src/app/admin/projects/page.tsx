@@ -10,6 +10,14 @@ import { SERVICE_LINE_LABELS, getServiceCategoryLabel } from '@/lib/service-conf
 type ViewMode = 'grid' | 'list';
 type ServiceFilter = 'all' | 'to-chuc-su-kien' | 'decor-tiec-cuoi';
 type FeaturedFilter = 'all' | 'featured';
+type BulkAction = 'delete' | 'feature' | null;
+type ConfirmAction =
+  | { type: 'delete-single'; project: Project }
+  | { type: 'feature-single'; project: Project }
+  | { type: 'unfeature-single'; project: Project }
+  | { type: 'bulk-delete' }
+  | { type: 'bulk-feature' }
+  | null;
 
 export default function ProjectsPage() {
   const router = useRouter();
@@ -23,7 +31,8 @@ export default function ProjectsPage() {
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
   const [deletingIds, setDeletingIds] = useState<string[]>([]);
   const [featuringIds, setFeaturingIds] = useState<string[]>([]);
-  const [bulkAction, setBulkAction] = useState<'delete' | null>(null);
+  const [bulkAction, setBulkAction] = useState<BulkAction>(null);
+  const [confirmAction, setConfirmAction] = useState<ConfirmAction>(null);
 
   useEffect(() => {
     const loadProjects = async () => {
@@ -121,11 +130,19 @@ export default function ProjectsPage() {
     setSelectedIds((current) => current.filter((id) => !idsToRemove.includes(id)));
   };
 
+  const getNextFeaturedOrder = (items: Project[]) =>
+    items.reduce((max, item) => {
+      if (!item.is_featured || !item.featured_order) return max;
+      return Math.max(max, item.featured_order);
+    }, 0);
+
+  const mergeUpdatedProjects = (updatedProjects: Project[]) => {
+    const updatedMap = new Map(updatedProjects.map((project) => [String(project.id), project]));
+    setProjects((current) => current.map((item) => updatedMap.get(String(item.id)) ?? item));
+  };
+
   const handleDeleteProject = async (project: Project) => {
     const projectId = String(project.id);
-    const confirmed = window.confirm(`Bạn có chắc muốn xoá project "${project.title}"?`);
-
-    if (!confirmed) return;
 
     setError('');
     setDeletingIds((current) => [...current, projectId]);
@@ -143,12 +160,6 @@ export default function ProjectsPage() {
   const handleBulkDelete = async () => {
     if (selectedProjects.length === 0) return;
 
-    const confirmed = window.confirm(
-      `Bạn có chắc muốn xoá ${selectedProjects.length} project đã chọn không? Hành động này không thể hoàn tác.`,
-    );
-
-    if (!confirmed) return;
-
     setError('');
     setBulkAction('delete');
     const idsToDelete = selectedProjects.map((project) => String(project.id));
@@ -165,45 +176,139 @@ export default function ProjectsPage() {
     }
   };
 
-
-
   const handleFeatureProject = async (project: Project) => {
     const projectId = String(project.id);
-
-    if (project.is_featured) {
-      setError('Project này đã ở trạng thái nổi bật.');
-      return;
-    }
-
-    const confirmed = window.confirm(
-      `Thêm project "${project.title}" vào danh sách nổi bật? Hệ thống sẽ tự gán featured order tiếp theo.`,
-    );
-
-    if (!confirmed) return;
 
     setError('');
     setFeaturingIds((current) => [...current, projectId]);
 
-    const currentMaxOrder = projects.reduce((max, item) => {
-      if (!item.is_featured || !item.featured_order) return max;
-      return Math.max(max, item.featured_order);
-    }, 0);
-
     try {
+      if (project.is_featured) {
+        const response = await apiClient.updateProject(projectId, {
+          is_featured: false,
+          featured_order: null,
+          featured_note: project.featured_note ?? null,
+        });
+
+        mergeUpdatedProjects([response.data]);
+        return;
+      }
+
       const response = await apiClient.updateProject(projectId, {
         is_featured: true,
-        featured_order: currentMaxOrder + 1,
+        featured_order: getNextFeaturedOrder(projects) + 1,
         featured_note: project.featured_note || undefined,
       });
 
-      setProjects((current) =>
-        current.map((item) => (String(item.id) === projectId ? response.data : item)),
-      );
+      mergeUpdatedProjects([response.data]);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Không thể thêm project vào nổi bật');
+      setError(err instanceof Error ? err.message : project.is_featured ? 'Không thể bỏ project khỏi nổi bật' : 'Không thể thêm project vào nổi bật');
     } finally {
       setFeaturingIds((current) => current.filter((id) => id !== projectId));
     }
+  };
+
+  const handleBulkFeature = async () => {
+    const projectsToFeature = selectedProjects.filter((project) => !project.is_featured);
+
+    if (projectsToFeature.length === 0) {
+      setError('Các project đã chọn đều đang ở trạng thái nổi bật.');
+      return;
+    }
+
+    setError('');
+    setBulkAction('feature');
+    const idsToFeature = projectsToFeature.map((project) => String(project.id));
+    setFeaturingIds((current) => Array.from(new Set([...current, ...idsToFeature])));
+
+    let nextOrder = getNextFeaturedOrder(projects);
+
+    try {
+      const responses = await Promise.all(
+        projectsToFeature.map((project) => {
+          nextOrder += 1;
+          return apiClient.updateProject(String(project.id), {
+            is_featured: true,
+            featured_order: nextOrder,
+            featured_note: project.featured_note || undefined,
+          });
+        }),
+      );
+
+      mergeUpdatedProjects(responses.map((response) => response.data));
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Không thể thêm các project đã chọn vào nổi bật');
+    } finally {
+      setFeaturingIds((current) => current.filter((id) => !idsToFeature.includes(id)));
+      setBulkAction(null);
+    }
+  };
+
+  const openFeatureDialog = (project: Project) => {
+    setConfirmAction({ type: project.is_featured ? 'unfeature-single' : 'feature-single', project });
+  };
+
+  const confirmActionTitle =
+    confirmAction?.type === 'bulk-delete'
+      ? `Xoá ${selectedProjects.length} project đã chọn?`
+      : confirmAction?.type === 'bulk-feature'
+        ? `Thêm ${selectedProjects.filter((project) => !project.is_featured).length} project vào nổi bật?`
+        : confirmAction?.type === 'delete-single'
+          ? `Xoá project “${confirmAction.project.title}”?`
+          : confirmAction?.type === 'unfeature-single'
+            ? `Bỏ project “${confirmAction.project.title}” khỏi nổi bật?`
+            : confirmAction?.type === 'feature-single'
+              ? `Thêm project “${confirmAction.project.title}” vào nổi bật?`
+              : '';
+
+  const confirmActionDescription =
+    confirmAction?.type === 'bulk-delete'
+      ? 'Hành động này sẽ xoá toàn bộ project đang chọn và không thể hoàn tác.'
+      : confirmAction?.type === 'bulk-feature'
+        ? 'Các project chưa nổi bật sẽ được thêm vào danh sách featured và tự gán thứ tự tiếp theo.'
+        : confirmAction?.type === 'delete-single'
+          ? 'Project sẽ bị xoá khỏi hệ thống ngay sau khi bạn xác nhận.'
+          : confirmAction?.type === 'unfeature-single'
+            ? 'Ngôi sao sẽ tắt sáng và project sẽ bị gỡ khỏi danh sách nổi bật.'
+            : confirmAction?.type === 'feature-single'
+              ? 'Ngôi sao sẽ sáng lên và project sẽ được thêm vào danh sách nổi bật.'
+              : '';
+
+  const confirmActionLabel =
+    confirmAction?.type === 'bulk-delete' || confirmAction?.type === 'delete-single'
+      ? bulkAction === 'delete'
+        ? 'Đang xoá...'
+        : 'Xác nhận xoá'
+      : confirmAction?.type === 'bulk-feature' || confirmAction?.type === 'feature-single' || confirmAction?.type === 'unfeature-single'
+        ? bulkAction === 'feature' || (confirmAction?.project && featuringIds.includes(String(confirmAction.project.id)))
+          ? 'Đang cập nhật...'
+          : confirmAction?.type === 'unfeature-single'
+            ? 'Bỏ nổi bật'
+            : 'Thêm nổi bật'
+        : 'Xác nhận';
+
+  const handleConfirmAction = async () => {
+    if (!confirmAction) return;
+
+    const currentAction = confirmAction;
+    setConfirmAction(null);
+
+    if (currentAction.type === 'bulk-delete') {
+      await handleBulkDelete();
+      return;
+    }
+
+    if (currentAction.type === 'bulk-feature') {
+      await handleBulkFeature();
+      return;
+    }
+
+    if (currentAction.type === 'delete-single') {
+      await handleDeleteProject(currentAction.project);
+      return;
+    }
+
+    await handleFeatureProject(currentAction.project);
   };
 
   if (loading) {
@@ -325,16 +430,25 @@ export default function ProjectsPage() {
           </div>
 
           {selectedProjects.length > 0 && (
-            <div className="flex flex-col gap-3 rounded-[20px] border border-[#d9e9ff] bg-[linear-gradient(135deg,#eff6ff_0%,#ffffff_100%)] p-4 md:flex-row md:items-center md:justify-between">
+            <div className="flex flex-col gap-3 rounded-[24px] border border-[#d9e9ff] bg-[linear-gradient(135deg,rgba(239,246,255,0.92)_0%,rgba(255,255,255,0.98)_100%)] p-4 shadow-[0_18px_40px_-28px_rgba(15,76,129,0.35)] md:flex-row md:items-center md:justify-between">
               <div>
                 <p className="text-sm font-semibold text-[#0F4C81]">Đã chọn {selectedProjects.length} project</p>
-                <p className="mt-1 text-xs text-slate-500">Bạn có thể xoá nhanh các mục đang chọn.</p>
+                <p className="mt-1 text-xs text-slate-500">Mở popup để thêm toàn bộ vào nổi bật hoặc xoá hàng loạt.</p>
               </div>
 
               <div className="flex flex-wrap gap-2">
                 <button
+                  id="projects-bulk-feature"
+                  onClick={() => setConfirmAction({ type: 'bulk-feature' })}
+                  disabled={bulkAction !== null}
+                  className="inline-flex items-center gap-2 rounded-full border border-amber-200 bg-amber-50 px-4 py-2 text-sm font-semibold text-amber-700 transition hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-50"
+                >
+                  <span className="material-symbols-outlined text-base">auto_awesome</span>
+                  {bulkAction === 'feature' ? 'Đang thêm...' : 'Thêm tất cả vào nổi bật'}
+                </button>
+                <button
                   id="projects-bulk-delete"
-                  onClick={() => void handleBulkDelete()}
+                  onClick={() => setConfirmAction({ type: 'bulk-delete' })}
                   disabled={bulkAction !== null}
                   className="inline-flex items-center gap-2 rounded-full border border-rose-200 bg-rose-50 px-4 py-2 text-sm font-semibold text-rose-700 transition hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-50"
                 >
@@ -376,20 +490,19 @@ export default function ProjectsPage() {
                   </label>
 
                   <div className="pointer-events-auto flex items-center gap-2">
-                    {!project.is_featured && (
-                      <button
-                        id={`feature-project-${projectId}`}
-                        onClick={() => void handleFeatureProject(project)}
-                        disabled={isFeaturing}
-                        className="inline-flex items-center gap-1.5 rounded-full border border-amber-200/80 bg-white/92 px-3 py-1.5 text-[11px] font-semibold text-amber-700 shadow-lg backdrop-blur transition hover:bg-amber-50 disabled:cursor-not-allowed disabled:opacity-50"
-                      >
-                        <span className="material-symbols-outlined text-sm">star</span>
-                        {isFeaturing ? 'Đang thêm...' : 'Nổi bật'}
-                      </button>
-                    )}
+                    <button
+                      id={`feature-project-${projectId}`}
+                      onClick={() => openFeatureDialog(project)}
+                      disabled={isFeaturing}
+                      aria-label={project.is_featured ? `Bỏ project ${project.title} khỏi nổi bật` : `Thêm project ${project.title} vào nổi bật`}
+                      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[11px] font-semibold shadow-lg backdrop-blur transition disabled:cursor-not-allowed disabled:opacity-50 ${project.is_featured ? 'border-amber-300/90 bg-amber-100/95 text-amber-800 hover:bg-amber-200/90' : 'border-slate-200/90 bg-white/92 text-slate-600 hover:bg-slate-50'}`}
+                    >
+                      <span className={`material-symbols-outlined text-sm ${project.is_featured ? 'text-amber-500' : 'text-slate-400'}`}>star</span>
+                      {isFeaturing ? 'Đang cập nhật...' : project.is_featured ? 'Đang nổi bật' : 'Thêm nổi bật'}
+                    </button>
                     <button
                       id={`delete-project-${projectId}`}
-                      onClick={() => void handleDeleteProject(project)}
+                      onClick={() => setConfirmAction({ type: 'delete-single', project })}
                       disabled={isDeleting}
                       className="inline-flex items-center gap-1.5 rounded-full border border-rose-200/80 bg-white/92 px-3 py-1.5 text-[11px] font-semibold text-rose-700 shadow-lg backdrop-blur transition hover:bg-rose-50 disabled:cursor-not-allowed disabled:opacity-50"
                     >
@@ -478,20 +591,18 @@ export default function ProjectsPage() {
                       {formatTimestamp(project.updated_at || project.created_at)}
                     </span>
                     <div className="flex flex-wrap items-center gap-2">
-                      {!project.is_featured && (
-                        <button
-                          id={`feature-list-project-${projectId}`}
-                          onClick={() => void handleFeatureProject(project)}
-                          disabled={isFeaturing}
-                          className="inline-flex items-center gap-1.5 rounded-full border border-amber-200 bg-amber-50 px-3 py-1.5 text-xs font-semibold text-amber-700 transition hover:bg-amber-100 disabled:cursor-not-allowed disabled:opacity-50"
-                        >
-                          <span className="material-symbols-outlined text-sm">star</span>
-                          {isFeaturing ? 'Đang thêm...' : 'Nổi bật'}
-                        </button>
-                      )}
+                      <button
+                        id={`feature-list-project-${projectId}`}
+                        onClick={() => openFeatureDialog(project)}
+                        disabled={isFeaturing}
+                        className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 ${project.is_featured ? 'border-amber-300 bg-amber-100 text-amber-800 hover:bg-amber-200' : 'border-slate-200 bg-slate-50 text-slate-600 hover:bg-slate-100'}`}
+                      >
+                        <span className={`material-symbols-outlined text-sm ${project.is_featured ? 'text-amber-500' : 'text-slate-400'}`}>star</span>
+                        {isFeaturing ? 'Đang cập nhật...' : project.is_featured ? 'Bỏ nổi bật' : 'Thêm nổi bật'}
+                      </button>
                       <button
                         id={`delete-list-project-${projectId}`}
-                        onClick={() => void handleDeleteProject(project)}
+                        onClick={() => setConfirmAction({ type: 'delete-single', project })}
                         disabled={isDeleting}
                         className="inline-flex items-center gap-1.5 rounded-full border border-rose-200 bg-rose-50 px-3 py-1.5 text-xs font-semibold text-rose-700 transition hover:bg-rose-100 disabled:cursor-not-allowed disabled:opacity-50"
                       >
@@ -520,6 +631,38 @@ export default function ProjectsPage() {
           <span className="material-symbols-outlined mb-4 text-5xl text-slate-300">folder_open</span>
           <p className="text-lg font-medium text-slate-600">Không tìm thấy dự án nào</p>
           <p className="mt-2 text-sm text-slate-400">Thử nới bộ lọc hoặc tìm theo featured note / client / venue.</p>
+        </div>
+      )}
+
+      {confirmAction && (
+        <div className="fixed inset-0 z-[90] flex items-center justify-center bg-[#020817]/55 px-4 backdrop-blur-sm">
+          <div className="w-full  overflow-hidden rounded-[32px] border border-white/20 bg-[linear-gradient(145deg,rgba(15,23,42,0.96)_0%,rgba(30,41,59,0.92)_100%)] shadow-[0_40px_120px_-40px_rgba(2,6,23,0.8)]">
+            <div className="border-b border-white/10 px-6 py-5 sm:px-8">
+              <div className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[11px] uppercase tracking-[0.28em] text-slate-300">
+                <span className="material-symbols-outlined text-sm text-amber-300">notification_important</span>
+                Xác nhận thao tác
+              </div>
+              <h2 className="mt-4 text-2xl font-semibold tracking-tight text-white">{confirmActionTitle}</h2>
+              <p className="mt-3 text-sm leading-7 text-slate-300">{confirmActionDescription}</p>
+            </div>
+
+            <div className="flex flex-col gap-3 px-6 py-5 sm:flex-row sm:justify-end sm:px-8">
+              <button
+                id="projects-confirm-cancel"
+                onClick={() => setConfirmAction(null)}
+                className="inline-flex items-center justify-center rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-semibold text-slate-200 transition hover:bg-white/10"
+              >
+                Huỷ
+              </button>
+              <button
+                id="projects-confirm-submit"
+                onClick={() => void handleConfirmAction()}
+                className={`inline-flex items-center justify-center rounded-full px-5 py-3 text-sm font-semibold transition ${confirmAction?.type === 'bulk-delete' || confirmAction?.type === 'delete-single' ? 'bg-[linear-gradient(135deg,#fb7185_0%,#e11d48_100%)] text-white hover:brightness-110' : 'bg-[linear-gradient(135deg,#f6d365_0%,#f59e0b_100%)] text-slate-950 hover:brightness-105'}`}
+              >
+                {confirmActionLabel}
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </>

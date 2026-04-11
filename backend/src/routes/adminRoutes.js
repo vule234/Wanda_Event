@@ -9,6 +9,7 @@ const { authenticate, requireAdmin } = require('../middleware/authMiddleware');
 const {
   validate,
   projectSchema,
+  projectUpdateSchema,
   librarySchema,
   loginSchema,
   leadUpdateSchema,
@@ -33,7 +34,7 @@ router.get('/projects', projectController.getAdminProjects);
 router.get('/projects/stats', projectController.getProjectStats);
 router.get('/projects/:id', projectController.getAdminProjectById);
 router.post('/projects', validate(projectSchema), projectController.createProject);
-router.put('/projects/:id', validate(projectSchema), projectController.updateProject);
+router.put('/projects/:id', validate(projectUpdateSchema), projectController.updateProject);
 router.delete('/projects/:id', projectController.deleteProject);
 
 // Leads Management

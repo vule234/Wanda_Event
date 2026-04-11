@@ -3,7 +3,7 @@ const { supabaseAdmin, supabasePublic } = require('../config/supabase');
 function normalizeProjectPayload(input = {}) {
   const payload = { ...input };
 
-  if (!payload.is_featured) {
+  if (payload.is_featured === false) {
     payload.featured_order = null;
     payload.featured_note = payload.featured_note || null;
   }
@@ -58,7 +58,11 @@ async function hydrateFeaturedOrder(payload, existingProject = null) {
 }
 
 async function ensureProjectSlug(projectData) {
-  if (projectData.slug) {
+  if (Object.prototype.hasOwnProperty.call(projectData, 'slug')) {
+    return projectData;
+  }
+
+  if (!projectData.title) {
     return projectData;
   }
 

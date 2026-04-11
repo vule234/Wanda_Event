@@ -169,6 +169,10 @@ const projectSchema = z.object({
   featured_note: z.preprocess(blankToNull, z.string().max(2000, 'Ghi chú nội bộ không được vượt quá 2000 ký tự').nullable().optional()),
 });
 
+const projectUpdateSchema = projectSchema.partial().refine((value) => Object.keys(value).length > 0, {
+  message: 'Vui lòng cung cấp ít nhất một trường cần cập nhật',
+});
+
 const leadUpdateSchema = z
   .object({
     status: z.preprocess(blankToUndefined, z.enum(LEAD_STATUSES).optional()),
@@ -201,6 +205,7 @@ module.exports = {
   leadSchema,
   leadUpdateSchema,
   projectSchema,
+  projectUpdateSchema,
   loginSchema,
   librarySchema,
   EVENT_PROJECT_CATEGORIES,
