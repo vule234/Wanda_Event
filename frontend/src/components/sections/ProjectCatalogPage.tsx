@@ -184,7 +184,7 @@ export default function ProjectCatalogPage({
                     href={brandConfig.contactHref}
                     target={brandConfig.contactHref.startsWith('http') ? '_blank' : undefined}
                     rel={brandConfig.contactHref.startsWith('http') ? 'noopener noreferrer' : undefined}
-                    className="inline-flex items-center justify-center rounded-full bg-white px-5 py-3 text-xs font-semibold uppercase tracking-[0.22em] text-slate-950 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-[0_18px_35px_-20px_rgba(255,255,255,0.55)]"
+                    className="tap-target-comfort touch-manipulation inline-flex items-center justify-center rounded-full bg-white px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-[0.22em] text-slate-950 transition-all duration-300 active:scale-[0.98] hover:-translate-y-0.5 hover:shadow-[0_18px_35px_-20px_rgba(255,255,255,0.55)]"
                   >
                     {ctaLabel}
                   </a>
@@ -193,11 +193,12 @@ export default function ProjectCatalogPage({
                       href={brandConfig.facebook}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center rounded-full border border-white/18 bg-white/[0.03] px-5 py-3 text-xs font-semibold uppercase tracking-[0.22em] text-white/80 transition-all duration-300 hover:border-white/40 hover:bg-white/[0.08] hover:text-white"
+                      className="tap-target-comfort touch-manipulation inline-flex items-center justify-center rounded-full border border-white/18 bg-white/[0.03] px-5 py-3.5 text-center text-xs font-semibold uppercase tracking-[0.22em] text-white/80 transition-all duration-300 active:scale-[0.98] hover:border-white/40 hover:bg-white/[0.08] hover:text-white"
                     >
                       Facebook
                     </a>
                   )}
+
                 </div>
               </div>
             </div>
@@ -240,10 +241,11 @@ export default function ProjectCatalogPage({
                         setActiveCategory('All');
                         setSearchQuery('');
                       }}
-                      className="text-xs font-medium text-[#0f4c81] transition-colors hover:text-[#163d63]"
+                      className="tap-target-comfort touch-manipulation rounded-full px-3 text-xs font-medium text-[#0f4c81] transition-colors active:scale-[0.98] hover:text-[#163d63]"
                     >
                       Xóa lọc
                     </button>
+
                   </div>
 
                   <div className="mt-4 flex flex-col gap-3">
@@ -261,11 +263,12 @@ export default function ProjectCatalogPage({
                           id={`${serviceLine}-category-${category.toLowerCase().replace(/[^a-z0-9]+/g, '-')}`}
                           key={category}
                           onClick={() => setActiveCategory(category)}
-                          className={`group flex items-center justify-between rounded-2xl border px-4 py-3 text-left text-sm font-medium transition-all duration-300 ${isActive
+                          className={`tap-target-comfort touch-manipulation group flex items-center justify-between rounded-2xl border px-4 py-3 text-left text-sm font-medium transition-all duration-300 active:scale-[0.99] ${isActive
                             ? 'border-[#0f4c81] bg-[#0f4c81] text-white shadow-[0_16px_30px_-18px_rgba(15,76,129,0.75)]'
                             : 'border-slate-200 bg-white text-slate-700 hover:border-[#b8d2ff] hover:bg-[#f5f9ff] hover:text-[#0f4c81]'
                             }`}
                         >
+
                           <span className="line-clamp-2 leading-6">{getServiceCategoryLabel(category)}</span>
                           <span
                             className={`rounded-full px-2.5 py-1 text-[11px] ${isActive
@@ -317,32 +320,32 @@ export default function ProjectCatalogPage({
                         whileInView={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.45, delay: index * 0.04 }}
                         viewport={{ once: true, amount: 0.2 }}
-                        className="group"
+                        className="group touch-hover-reset"
                       >
-                        <Link href={getProjectHref(project)} className="block h-full">
+                        <Link href={getProjectHref(project)} className="interactive-card touch-manipulation block h-full rounded-[30px] focus:outline-none focus:ring-2 focus:ring-[#0f4c81]/25">
                           <div className="relative overflow-hidden rounded-[30px] border border-white/70 bg-white/80 shadow-[0_22px_65px_-30px_rgba(15,23,42,0.22)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_30px_80px_-34px_rgba(15,76,129,0.32)]">
                             <div className="relative aspect-[4/5] overflow-hidden bg-slate-200">
                               {project.thumbnail ? (
                                 <img
                                   alt={project.title}
                                   src={project.thumbnail}
-                                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                                  className="pointer-events-none h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                                   loading="lazy"
                                 />
                               ) : (
                                 <div className="h-full w-full bg-gradient-to-br from-slate-200 via-slate-100 to-white" />
                               )}
 
-                              <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/16 to-transparent" />
+                              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/16 to-transparent" />
                               <div
-                                className={`absolute inset-x-0 top-0 h-32 bg-gradient-to-b ${CATEGORY_ACCENTS[categoryKey] || CATEGORY_ACCENTS.Other}`}
+                                className={`pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b ${CATEGORY_ACCENTS[categoryKey] || CATEGORY_ACCENTS.Other}`}
                               />
 
                               <div className="absolute left-5 right-5 top-5 flex items-start justify-between gap-4">
                                 <span className="rounded-full border border-white/25 bg-white/14 px-3 py-1.5 text-[10px] uppercase tracking-[0.24em] text-white backdrop-blur-md">
                                   {getServiceCategoryLabel(categoryKey)}
                                 </span>
-                                <div className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-slate-950/28 text-white/90 backdrop-blur-md transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
+                                <div className="pointer-events-none flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-slate-950/28 text-white/90 backdrop-blur-md transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1">
                                   <span className="material-symbols-outlined">arrow_outward</span>
                                 </div>
                               </div>
@@ -361,6 +364,7 @@ export default function ProjectCatalogPage({
                           </div>
                         </Link>
                       </motion.article>
+
                     );
                   })}
                 </div>
@@ -373,10 +377,11 @@ export default function ProjectCatalogPage({
                         type="button"
                         onClick={() => setCurrentPage((page) => Math.max(1, page - 1))}
                         disabled={safeCurrentPage === 1}
-                        className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition disabled:cursor-not-allowed disabled:opacity-50 hover:border-[#b8d2ff] hover:text-[#0f4c81]"
+                        className="tap-target-comfort touch-manipulation rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 hover:border-[#b8d2ff] hover:text-[#0f4c81]"
                       >
                         Trước
                       </button>
+
 
                       {Array.from({ length: totalPages }).map((_, index) => {
                         const page = index + 1;
@@ -388,13 +393,14 @@ export default function ProjectCatalogPage({
                             key={page}
                             type="button"
                             onClick={() => setCurrentPage(page)}
-                            className={`h-11 min-w-11 rounded-xl border px-3 text-sm font-semibold transition ${isActive
+                            className={`tap-target-comfort touch-manipulation h-11 min-w-11 rounded-xl border px-3 text-sm font-semibold transition active:scale-[0.98] ${isActive
                               ? 'border-[#0f4c81] bg-[#0f4c81] text-white shadow-[0_16px_30px_-18px_rgba(15,76,129,0.75)]'
                               : 'border-slate-200 bg-white text-slate-700 hover:border-[#b8d2ff] hover:text-[#0f4c81]'
                               }`}
                           >
                             {page}
                           </button>
+
                         );
                       })}
 
@@ -403,10 +409,11 @@ export default function ProjectCatalogPage({
                         type="button"
                         onClick={() => setCurrentPage((page) => Math.min(totalPages, page + 1))}
                         disabled={safeCurrentPage === totalPages}
-                        className="rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition disabled:cursor-not-allowed disabled:opacity-50 hover:border-[#b8d2ff] hover:text-[#0f4c81]"
+                        className="tap-target-comfort touch-manipulation rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 hover:border-[#b8d2ff] hover:text-[#0f4c81]"
                       >
                         Sau
                       </button>
+
                     </div>
                   </div>
                 </div>

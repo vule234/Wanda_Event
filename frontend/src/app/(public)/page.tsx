@@ -293,11 +293,11 @@ export default function HomePage() {
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: index * 0.06 }}
                       viewport={{ once: true, amount: 0.15 }}
-                      className="group relative mb-6 break-inside-avoid overflow-hidden rounded-[1.9rem] shadow-[0_20px_60px_-40px_rgba(0,17,58,0.25)] transition-all duration-700 hover:-translate-y-1 hover:shadow-[0_30px_80px_-32px_rgba(0,17,58,0.35)]"
+                      className="group touch-hover-reset relative mb-6 break-inside-avoid overflow-hidden rounded-[1.9rem] shadow-[0_20px_60px_-40px_rgba(0,17,58,0.25)] transition-all duration-700 hover:-translate-y-1 hover:shadow-[0_30px_80px_-32px_rgba(0,17,58,0.35)]"
                       style={{ minHeight: `${minHeight}px` }}
                     >
-                      <Link href={getProjectHref(project)} className="block h-full">
-                        <div className="absolute inset-0">
+                      <Link href={getProjectHref(project)} className="interactive-card touch-manipulation block h-full rounded-[1.9rem] focus:outline-none focus:ring-2 focus:ring-primary/30">
+                        <div className="pointer-events-none absolute inset-0">
                           {project.thumbnail ? (
                             <img
                               className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.08]"
@@ -310,14 +310,14 @@ export default function HomePage() {
                           )}
                         </div>
 
-                        <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/34 to-transparent transition-all duration-700 group-hover:from-primary/98 group-hover:via-primary/50" />
+                        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/34 to-transparent transition-all duration-700 group-hover:from-primary/98 group-hover:via-primary/50" />
 
                         <div className="absolute inset-0 flex flex-col justify-between p-5 sm:p-6">
                           <div className="flex items-start justify-between gap-4">
                             <span className="inline-flex rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[9px] font-medium uppercase tracking-[0.3em] text-white/70 backdrop-blur-sm">
                               {categoryLabel}
                             </span>
-                            <span className="flex h-11 w-11 items-center justify-center rounded-full border border-white/18 bg-slate-950/24 text-white/86 backdrop-blur-md transition-transform duration-500 group-hover:-translate-y-1 group-hover:translate-x-1">
+                            <span className="pointer-events-none flex h-11 w-11 items-center justify-center rounded-full border border-white/18 bg-slate-950/24 text-white/86 backdrop-blur-md transition-transform duration-500 group-hover:-translate-y-1 group-hover:translate-x-1">
                               <span className="material-symbols-outlined">arrow_outward</span>
                             </span>
                           </div>
@@ -334,6 +334,7 @@ export default function HomePage() {
                         </div>
                       </Link>
                     </motion.article>
+
                   );
                 })}
               </div>
@@ -344,10 +345,11 @@ export default function HomePage() {
             <div className="mt-8 flex justify-center">
               <Link
                 href="/projects"
-                className="inline-flex items-center justify-center rounded-full border border-primary/12 bg-primary px-7 py-3.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-on-primary shadow-[0_24px_60px_-28px_rgba(0,17,58,0.42)] transition-all duration-300 hover:-translate-y-1 hover:bg-primary-container"
+                className="tap-target-comfort touch-manipulation inline-flex items-center justify-center rounded-full border border-primary/12 bg-primary px-7 py-4 text-center text-[11px] font-semibold uppercase tracking-[0.2em] text-on-primary shadow-[0_24px_60px_-28px_rgba(0,17,58,0.42)] transition-all duration-300 active:scale-[0.98] hover:-translate-y-1 hover:bg-primary-container"
               >
                 Xem tất cả dự án
               </Link>
+
             </div>
           )}
         </div>

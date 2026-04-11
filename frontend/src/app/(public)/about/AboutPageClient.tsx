@@ -218,15 +218,16 @@ export default function AboutPageClient() {
               <Link
                 id="about-cta-projects"
                 href="/projects"
-                className="inline-flex items-center justify-center rounded-full bg-primary px-7 py-4 text-sm font-semibold uppercase tracking-[0.16em] text-white transition-colors duration-300 hover:bg-primary/92"
+                className="tap-target-comfort touch-manipulation inline-flex items-center justify-center rounded-full bg-primary px-7 py-4 text-sm font-semibold uppercase tracking-[0.16em] text-white transition-all duration-300 active:scale-[0.98] hover:bg-primary/92"
               >
                 Xem dự án tiêu biểu
               </Link>
               <Link
                 id="about-cta-contact"
                 href="/#contact"
-                className="inline-flex items-center justify-center rounded-full border border-primary/14 bg-white px-7 py-4 text-sm font-semibold uppercase tracking-[0.16em] text-primary transition-colors duration-300 hover:bg-[#f5efe7]"
+                className="tap-target-comfort touch-manipulation inline-flex items-center justify-center rounded-full border border-primary/14 bg-white px-7 py-4 text-sm font-semibold uppercase tracking-[0.16em] text-primary transition-all duration-300 active:scale-[0.98] hover:bg-[#f5efe7]"
               >
+
                 Liên hệ tư vấn
               </Link>
             </div>

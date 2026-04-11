@@ -96,24 +96,22 @@ export const Header = () => {
             aria-expanded={isOpen}
             aria-controls="public-mobile-nav-panel"
             aria-label={isOpen ? 'Đóng menu điều hướng' : 'Mở menu điều hướng'}
-            className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-primary/10 bg-primary text-white shadow-[0_14px_30px_-20px_rgba(0,17,58,0.5)] transition-all duration-300 hover:scale-[1.02] lg:hidden"
+            className="tap-target-comfort touch-manipulation inline-flex h-11 w-11 items-center justify-center rounded-full border border-primary/10 bg-primary text-white shadow-[0_14px_30px_-20px_rgba(0,17,58,0.5)] transition-all duration-300 active:scale-[0.97] hover:scale-[1.02] lg:hidden"
           >
+
             <span className="material-symbols-outlined text-[22px]">{isOpen ? 'close' : 'menu'}</span>
           </button>
         </div>
       </div>
 
-      <div
-        className={`page-shell-tight lg:hidden ${
-          isOpen ? 'pointer-events-auto mt-3' : 'pointer-events-none mt-1'
-        }`}
-      >
+      <div className={`page-shell-tight lg:hidden ${isOpen ? 'pointer-events-auto mt-3' : 'pointer-events-none invisible h-0 overflow-hidden'}`}>
         <div
           id="public-mobile-nav-panel"
           className={`surface-panel overflow-hidden rounded-[1.8rem] border border-white/70 bg-white/84 transition-all duration-300 ${
             isOpen ? 'translate-y-0 opacity-100' : '-translate-y-3 opacity-0'
           }`}
         >
+
           <div className="space-y-3 px-4 py-4 sm:px-5 sm:py-5">
             <div className="rounded-[1.4rem] bg-[linear-gradient(135deg,rgba(0,17,58,0.98),rgba(17,37,88,0.95))] px-4 py-4 text-white shadow-[0_20px_50px_-34px_rgba(0,17,58,0.9)]">
               <p className="text-[10px] uppercase tracking-[0.28em] text-white/58">Wanda Event</p>
@@ -145,16 +143,17 @@ export const Header = () => {
             <div className="grid gap-2 sm:grid-cols-2">
               <Link
                 href="/contact"
-                className="inline-flex items-center justify-center rounded-full bg-primary px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-white transition-all duration-300 hover:bg-primary/92"
+                className="tap-target-comfort touch-manipulation inline-flex items-center justify-center rounded-full bg-primary px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-white transition-all duration-300 active:scale-[0.98] hover:bg-primary/92"
               >
                 Liên hệ tư vấn
               </Link>
               <a
                 href="tel:0962622438"
-                className="inline-flex items-center justify-center rounded-full border border-primary/12 bg-white px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary transition-all duration-300 hover:bg-slate-50"
+                className="tap-target-comfort touch-manipulation inline-flex items-center justify-center rounded-full border border-primary/12 bg-white px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.18em] text-primary transition-all duration-300 active:scale-[0.98] hover:bg-slate-50"
               >
                 Gọi hotline
               </a>
+
             </div>
           </div>
         </div>

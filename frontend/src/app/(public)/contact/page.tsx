@@ -149,8 +149,9 @@ export default function ContactPage() {
                     href="https://www.bing.com/maps/search?v=2&pc=FACEBK&mid=8100&mkt=en-US&fbclid=IwY2xjawQ-xhtleHRuA2FlbQIxMABicmlkETFKeVlqTkdYOXU2a3BUMUJlc3J0YwZhcHBfaWQQMjIyMDM5MTc4ODIwMDg5MgABHiJpxkQ4oyr22sxlrq4L6Ywe3sDPYLqVsf1_w_KNio4VC8XDAWFD-gMub5oe_aem_NFrORyJJdP4aq5RhNfKKCw&FORM=FBKPL1&q=372+Tr%E1%BA%A7n+%C4%90%E1%BA%A1i+Ngh%C4%A9a%2C+H%C3%B2a+H%E1%BA%A3i%2C+Ng%C5%A9+H%C3%A0nh+S%C6%A1n%2C+Da+Nang%2C+Vietnam&cp=15.980167%7E108.250406&lvl=16.2&style=r"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="mt-3 inline-flex w-fit items-center gap-2 rounded-full bg-primary px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.16em] text-on-primary transition-transform duration-300 hover:-translate-y-0.5 hover:bg-primary/90"
+                    className="tap-target-comfort touch-manipulation mt-3 inline-flex w-fit items-center gap-2 rounded-full bg-primary px-4.5 py-3 text-[11px] font-semibold uppercase tracking-[0.16em] text-on-primary transition active:scale-[0.98] hover:-translate-y-0.5 hover:bg-primary/90"
                   >
+
                     <span>Mở trên Bing Maps</span>
                     <span className="material-symbols-outlined text-[16px]">north_east</span>
                   </a>
@@ -460,10 +461,12 @@ function ContactForm() {
               : 'Mercury Wanda sẽ liên hệ lại sau khi nhận được thông tin của bạn.'}
           </p>
           <button
+            id="contact-submit-button"
             type="submit"
             disabled={loading || (isCaptchaEnabled && !captchaToken)}
-            className="inline-flex items-center justify-center rounded-2xl bg-primary px-8 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-on-primary transition-all hover:bg-primary/90 active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-60"
+            className="tap-target-comfort touch-manipulation inline-flex items-center justify-center rounded-2xl bg-primary px-8 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-on-primary transition-all active:scale-[0.98] hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-60"
           >
+
             {loading ? 'Đang gửi...' : isCaptchaEnabled && !captchaToken ? 'Xác thực CAPTCHA để gửi' : 'Gửi yêu cầu tư vấn'}
           </button>
         </div>

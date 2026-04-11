@@ -110,8 +110,9 @@ export default function ProjectDetailPage() {
               <div>
                 <Link
                   href={getListingPath(project.service_line)}
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.26em] text-white/90 backdrop-blur-md transition hover:bg-white/14"
+                  className="tap-target-comfort touch-manipulation inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.26em] text-white/90 backdrop-blur-md transition active:scale-[0.98] hover:bg-white/14"
                 >
+
                   <span className="material-symbols-outlined text-base">west</span>
                   Quay lại danh sách
                 </Link>
@@ -152,16 +153,16 @@ export default function ProjectDetailPage() {
               <h2 className="mt-3 text-xl font-semibold text-slate-900">{brandConfig.name}</h2>
               <p className="mt-2 text-sm leading-6 text-slate-600">{brandConfig.heroCopy}</p>
               <div className="mt-5 space-y-3 text-sm text-slate-700">
-                <a href={`tel:${brandConfig.phoneDisplay.replace(/\s+/g, '')}`} className="block transition hover:text-primary">
+                <a href={`tel:${brandConfig.phoneDisplay.replace(/\s+/g, '')}`} className="tap-target-comfort touch-manipulation block rounded-2xl px-3 py-2 transition active:scale-[0.99] hover:text-primary">
                   Hotline: {brandConfig.phoneDisplay}
                 </a>
                 {brandConfig.email && (
-                  <a href={`mailto:${brandConfig.email}`} className="block break-all transition hover:text-primary">
+                  <a href={`mailto:${brandConfig.email}`} className="tap-target-comfort touch-manipulation block break-all rounded-2xl px-3 py-2 transition active:scale-[0.99] hover:text-primary">
                     {brandConfig.email}
                   </a>
                 )}
                 {brandConfig.facebook && (
-                  <a href={brandConfig.facebook} target="_blank" rel="noopener noreferrer" className="block transition hover:text-primary">
+                  <a href={brandConfig.facebook} target="_blank" rel="noopener noreferrer" className="tap-target-comfort touch-manipulation block rounded-2xl px-3 py-2 transition active:scale-[0.99] hover:text-primary">
                     Facebook Pi Decor
                   </a>
                 )}
@@ -170,8 +171,9 @@ export default function ProjectDetailPage() {
                 href={brandConfig.contactHref}
                 target={brandConfig.contactHref.startsWith('http') ? '_blank' : undefined}
                 rel={brandConfig.contactHref.startsWith('http') ? 'noopener noreferrer' : undefined}
-                className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.22em] text-on-primary transition hover:-translate-y-0.5 hover:bg-primary/90"
+                className="tap-target-comfort touch-manipulation mt-5 inline-flex w-full items-center justify-center rounded-full bg-primary px-5 py-3.5 text-[11px] font-semibold uppercase tracking-[0.22em] text-on-primary transition active:scale-[0.98] hover:-translate-y-0.5 hover:bg-primary/90"
               >
+
                 {project.service_line === 'decor-tiec-cuoi' ? 'Chat Zalo Pi Decor' : 'Liên hệ Wanda Event'}
               </a>
             </div>
@@ -201,15 +203,16 @@ export default function ProjectDetailPage() {
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ duration: 0.35, delay: index * 0.04 }}
                   onClick={() => setSelectedImage(image)}
-                  className="group relative aspect-square overflow-hidden rounded-[24px] border border-white/70 bg-white shadow-[0_18px_60px_-36px_rgba(15,23,42,0.28)]"
+                  className="tap-target-comfort touch-manipulation group relative aspect-square overflow-hidden rounded-[24px] border border-white/70 bg-white shadow-[0_18px_60px_-36px_rgba(15,23,42,0.28)] active:scale-[0.99]"
                 >
                   <Image
                     src={image}
                     alt={`${project.title} - ${index + 1}`}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="pointer-events-none object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-slate-950/0 transition group-hover:bg-slate-950/24" />
+                  <div className="pointer-events-none absolute inset-0 bg-slate-950/0 transition group-hover:bg-slate-950/24" />
+
                 </motion.button>
               ))}
             </div>
@@ -234,21 +237,22 @@ export default function ProjectDetailPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.45, delay: index * 0.08 }}
                 >
-                  <Link href={getProjectHref(relatedProject)} className="group block">
-                    <div className="overflow-hidden rounded-[26px] border border-white/70 bg-white shadow-[0_22px_70px_-42px_rgba(15,23,42,0.25)]">
+                  <Link href={getProjectHref(relatedProject)} className="interactive-card touch-manipulation group block rounded-[26px] focus:outline-none focus:ring-2 focus:ring-primary/25">
+                    <div className="overflow-hidden rounded-[26px] border border-white/70 bg-white shadow-[0_22px_70px_-42px_rgba(15,23,42,0.25)] transition-all duration-300 hover:-translate-y-1 active:scale-[0.99]">
                       <div className="relative aspect-[4/4.5] overflow-hidden bg-slate-100">
                         {relatedProject.thumbnail ? (
                           <Image
                             src={relatedProject.thumbnail}
                             alt={relatedProject.title}
                             fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-105"
+                            className="pointer-events-none object-cover transition-transform duration-500 group-hover:scale-105"
                           />
                         ) : (
                           <div className="h-full w-full bg-gradient-to-br from-slate-200 via-slate-100 to-white" />
                         )}
                       </div>
                       <div className="p-5">
+
                         <p className="text-[11px] uppercase tracking-[0.24em] text-slate-400">
                           {getServiceCategoryLabel(relatedProject.service_category || relatedProject.category)}
                         </p>
@@ -282,11 +286,15 @@ export default function ProjectDetailPage() {
           >
             <Image src={selectedImage} alt="Full size" fill className="object-contain" />
             <button
+              id="project-gallery-lightbox-close"
+              type="button"
               onClick={() => setSelectedImage(null)}
-              className="absolute right-4 top-4 text-white transition hover:text-white/70"
+              className="tap-target-comfort touch-manipulation absolute right-3 top-3 inline-flex items-center justify-center rounded-full bg-black/55 text-white transition active:scale-[0.97] hover:bg-black/68"
+              aria-label="Đóng ảnh phóng to"
             >
-              <span className="material-symbols-outlined text-4xl">close</span>
+              <span className="material-symbols-outlined text-3xl">close</span>
             </button>
+
           </motion.div>
         </motion.div>
       )}

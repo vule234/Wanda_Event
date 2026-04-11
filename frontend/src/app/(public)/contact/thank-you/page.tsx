@@ -58,7 +58,7 @@ export default function ThankYouPage() {
         {/* Contact Info */}
         <p className="body-sm text-on-surface/50 mt-10">
           Cần hỗ trợ khẩn cấp?{' '}
-          <a href="tel:+84909000000" className="text-primary hover:text-primary-container transition-colors">
+          <a href="tel:+84909000000" className="tap-target-comfort touch-manipulation inline-flex items-center rounded-xl px-2 py-1 text-primary transition-colors active:scale-[0.98] hover:text-primary-container">
             Gọi ngay: +84 (909) 000-000
           </a>
         </p>

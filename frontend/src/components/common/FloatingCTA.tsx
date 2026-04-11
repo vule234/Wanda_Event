@@ -101,11 +101,7 @@ export const FloatingCTA = () => {
   useEffect(() => {
     if (!isOpen) return;
 
-    const isMobileViewport = () => window.innerWidth < 768;
-
-    const handleOutsideClose = (event: PointerEvent | TouchEvent) => {
-      if (!isMobileViewport()) return;
-
+    const handleOutsideClose = (event: PointerEvent) => {
       const target = event.target as Node | null;
       const modalNode = modalCardRef.current;
       const triggerNode = triggerButtonRef.current;
@@ -118,17 +114,16 @@ export const FloatingCTA = () => {
     };
 
     document.addEventListener('pointerdown', handleOutsideClose);
-    document.addEventListener('touchstart', handleOutsideClose, { passive: true });
 
     return () => {
       document.removeEventListener('pointerdown', handleOutsideClose);
-      document.removeEventListener('touchstart', handleOutsideClose);
     };
   }, [closeModal, isOpen]);
 
+
   return (
     <>
-      <div className="fixed bottom-4 right-4 z-40 flex max-w-[calc(100vw-1rem)] flex-col items-end gap-3 sm:bottom-5 sm:right-5 md:bottom-6 md:right-6">
+      <div className="fixed fixed-cta-safe bottom-4 right-4 z-[60] flex max-w-[calc(100vw-1rem)] flex-col items-end gap-3 sm:bottom-5 sm:right-5 md:bottom-6 md:right-6">
         {isOpen ? (
           <div className="relative z-20 w-[min(24rem,calc(100vw-1rem))] animate-[chatSlideUp_420ms_cubic-bezier(0.22,1,0.36,1)] sm:w-[24rem]">
             <div
@@ -136,7 +131,8 @@ export const FloatingCTA = () => {
               id="wanda-premium-contact-modal"
               className="overflow-hidden rounded-[1.7rem] rounded-br-md border border-white/70 bg-white/96 shadow-[0_30px_70px_-24px_rgba(15,23,42,0.28)] backdrop-blur-xl"
             >
-              <div className="relative border-b border-slate-100/90 bg-[linear-gradient(135deg,#f8fafc_0%,#ffffff_100%)] px-4 py-3 pr-20 sm:px-5 sm:pr-24">
+              <div className="relative border-b border-slate-100/90 bg-[linear-gradient(135deg,#f8fafc_0%,#ffffff_100%)] px-4 py-3 pr-16 sm:px-5 sm:pr-20">
+
                 <div className="flex min-w-0 items-center gap-3">
                   <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-primary text-white shadow-[0_10px_24px_rgba(0,17,58,0.22)]">
                     <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -157,21 +153,15 @@ export const FloatingCTA = () => {
                 <button
                   id="wanda-premium-contact-close"
                   type="button"
-                  onMouseDown={closeModal}
-                  onTouchStart={(e) => {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    closeModal();
-                  }}
-                  className="absolute inset-y-0 right-0 z-30 flex w-[72px] items-center justify-center rounded-l-[1.2rem] bg-transparent text-slate-500 transition-all duration-200 active:bg-slate-100/90 focus:outline-none focus:ring-2 focus:ring-slate-300 sm:w-[88px]"
+                  onClick={closeModal}
+                  className="tap-target-comfort touch-manipulation absolute right-2 top-2 z-30 inline-flex items-center justify-center rounded-full bg-white/94 text-slate-500 shadow-[0_12px_28px_rgba(15,23,42,0.12)] transition-all duration-200 active:scale-[0.97] active:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-slate-300 sm:right-3 sm:top-3"
                   aria-label="Close"
                 >
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 shadow-[0_8px_20px_rgba(15,23,42,0.08)]">
-                    <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 6l12 12M18 6L6 18" />
-                    </svg>
-                  </span>
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 6l12 12M18 6L6 18" />
+                  </svg>
                 </button>
+
               </div>
 
               <div className="bg-[linear-gradient(180deg,#f8fafc_0%,#eef2ff_100%)] px-4 py-4 sm:px-5">
@@ -229,8 +219,9 @@ export const FloatingCTA = () => {
             aria-haspopup="dialog"
             aria-expanded={isOpen}
             aria-controls="wanda-premium-contact-modal"
-            className="group relative z-10 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-[0_18px_40px_rgba(0,17,58,0.28)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_52px_rgba(0,17,58,0.34)] focus:outline-none focus:ring-2 focus:ring-primary/30 sm:h-15 sm:w-15"
+            className="tap-target-comfort touch-manipulation group relative z-10 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-white shadow-[0_18px_40px_rgba(0,17,58,0.28)] transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-[0_24px_52px_rgba(0,17,58,0.34)] active:scale-[0.97] focus:outline-none focus:ring-2 focus:ring-primary/30 sm:h-15 sm:w-15"
           >
+
             <span className="pointer-events-none absolute -inset-1 rounded-full border border-primary/25 animate-[ping_2.8s_ease-out_infinite]" />
             <span className="pointer-events-none absolute inset-0 rounded-full shadow-[0_0_0_0_rgba(0,17,58,0.18)] animate-[pulse_2.6s_ease-in-out_infinite]" />
             <span className="relative flex h-14 w-14 items-center justify-center rounded-full animate-[wiggle_3.4s_ease-in-out_infinite] group-hover:animate-none sm:h-15 sm:w-15">
