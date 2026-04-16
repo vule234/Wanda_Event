@@ -196,10 +196,10 @@ export default function HomePage() {
               transition={{ duration: 0.7, delay: 0.06 }}
               className="mt-8 sm:mt-12"
             >
-              <p className="font-serif text-[clamp(1.7rem,6vw,5.2rem)] leading-[1.04] tracking-[-0.035em] text-white sm:text-[clamp(2.3rem,6vw,5.2rem)] sm:tracking-[-0.05em]">
+              <p className="whitespace-nowrap font-serif text-[clamp(1.32rem,5vw,5.2rem)] leading-[1.04] tracking-[-0.02em] text-white sm:text-[clamp(2.3rem,6vw,5.2rem)] sm:tracking-[-0.05em]">
                 {currentHeroSlide.lineOne}
               </p>
-              <p className="mt-2 font-serif text-[clamp(1.95rem,7vw,6rem)] font-semibold italic leading-[0.98] tracking-[-0.04em] text-secondary-fixed-dim drop-shadow-[0_12px_40px_rgba(233,195,73,0.22)] sm:text-[clamp(2.6rem,7vw,6rem)] sm:tracking-[-0.06em]">
+              <p className="mt-2 whitespace-nowrap font-serif text-[clamp(1.5rem,5.6vw,6rem)] font-semibold italic leading-[0.98] tracking-[-0.03em] text-secondary-fixed-dim drop-shadow-[0_12px_40px_rgba(233,195,73,0.22)] sm:text-[clamp(2.6rem,7vw,6rem)] sm:tracking-[-0.06em]">
                 {currentHeroSlide.highlight}
               </p>
             </motion.div>
