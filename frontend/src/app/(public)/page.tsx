@@ -223,10 +223,36 @@ export default function HomePage() {
             </motion.p>
 
             <motion.div
+              key={`${currentHeroSlide.id}-cta`}
+              initial={{ opacity: 0, y: 22 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.75, delay: 0.18 }}
+              className="mt-10 flex flex-col items-center justify-center gap-4 sm:flex-row"
+            >
+              <Link
+                id="home-hero-view-all-projects"
+                href="/projects"
+                className="tap-target-comfort touch-manipulation inline-flex min-w-[220px] items-center justify-center gap-2 rounded-full border border-[#ffe1a1]/25 bg-[linear-gradient(135deg,rgba(255,222,154,0.96),rgba(233,195,73,0.94))] px-7 py-4 text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-950 shadow-[0_28px_80px_-32px_rgba(233,195,73,0.52)] transition-all duration-300 active:scale-[0.98] hover:-translate-y-1 hover:shadow-[0_34px_90px_-34px_rgba(233,195,73,0.6)]"
+              >
+                <span>Xem tất cả dự án</span>
+                <span className="material-symbols-outlined text-[18px]">arrow_outward</span>
+              </Link>
+
+              <Link
+                id="home-hero-contact-now"
+                href="#contact"
+                className="tap-target-comfort touch-manipulation inline-flex min-w-[220px] items-center justify-center gap-2 rounded-full border border-white/18 bg-white/10 px-7 py-4 text-center text-[11px] font-semibold uppercase tracking-[0.22em] text-white shadow-[0_24px_60px_-36px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-all duration-300 active:scale-[0.98] hover:-translate-y-1 hover:border-white/30 hover:bg-white/16"
+              >
+                <span>Liên hệ ngay</span>
+                <span className="material-symbols-outlined text-[18px]">call_made</span>
+              </Link>
+            </motion.div>
+
+            <motion.div
               initial={{ opacity: 0, y: 18 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.2 }}
-              className="mt-12 flex items-center gap-3"
+              className="mt-10 flex items-center gap-3"
             >
               {HERO_SLIDES.map((slide, index) => {
                 const isActive = index === activeHeroSlide;
@@ -264,14 +290,13 @@ export default function HomePage() {
 
           <div className="mt-10">
             {loadingFeatured ? (
-              <div className="columns-1 gap-6 md:columns-2 xl:columns-3">
-                {Array.from({ length: 8 }).map((_, index) => (
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
+                {Array.from({ length: 6 }).map((_, index) => (
                   <div
                     key={index}
-                    className="mb-6 break-inside-avoid overflow-hidden rounded-[1.8rem] bg-surface-container"
-                    style={{ height: `${280 + (index % 3) * 86}px` }}
+                    className="overflow-hidden rounded-[2rem] border border-white/70 bg-white/80 shadow-[0_22px_65px_-34px_rgba(15,23,42,0.16)]"
                   >
-                    <div className="h-full w-full animate-pulse bg-gradient-to-br from-surface-container-high to-surface-container-highest" />
+                    <div className="aspect-[4/5] w-full animate-pulse bg-gradient-to-br from-surface-container-high via-surface-container to-surface-container-highest" />
                   </div>
                 ))}
               </div>
@@ -280,11 +305,9 @@ export default function HomePage() {
                 <p className="text-outline">Chưa có dự án tiêu biểu. Hãy bật &quot;is_featured&quot; trong Admin.</p>
               </div>
             ) : (
-              <div className="columns-1 gap-6 md:columns-2 xl:columns-3">
+              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3">
                 {featuredProjects.map((project, index) => {
                   const categoryLabel = getServiceCategoryLabel(project.service_category || project.category);
-                  const heights = [440, 360, 500, 340, 420, 460, 390, 480];
-                  const minHeight = heights[index % heights.length];
 
                   return (
                     <motion.article
@@ -293,12 +316,14 @@ export default function HomePage() {
                       whileInView={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.6, delay: index * 0.06 }}
                       viewport={{ once: true, amount: 0.15 }}
-                      className="group touch-hover-reset mb-6 break-inside-avoid"
-                      style={{ minHeight: `${minHeight}px` }}
+                      className="group touch-hover-reset h-full"
                     >
-                      <Link href={getProjectHref(project)} className="interactive-card touch-manipulation block h-full rounded-[30px] focus:outline-none focus:ring-2 focus:ring-[#0f4c81]/25">
+                      <Link
+                        href={getProjectHref(project)}
+                        className="interactive-card touch-manipulation block h-full rounded-[30px] focus:outline-none focus:ring-2 focus:ring-[#0f4c81]/25"
+                      >
                         <div className="relative h-full overflow-hidden rounded-[30px] border border-white/70 bg-white/80 shadow-[0_22px_65px_-30px_rgba(15,23,42,0.22)] transition-all duration-500 hover:-translate-y-1.5 hover:shadow-[0_30px_80px_-34px_rgba(15,76,129,0.32)]">
-                          <div className="relative h-full min-h-[320px] overflow-hidden bg-slate-200">
+                          <div className="relative aspect-[4/5] overflow-hidden bg-slate-200">
                             {project.thumbnail ? (
                               <img
                                 className="pointer-events-none h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
@@ -310,7 +335,7 @@ export default function HomePage() {
                               <div className="h-full w-full bg-gradient-to-br from-slate-200 via-slate-100 to-white" />
                             )}
 
-                            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/80 via-slate-900/16 to-transparent" />
+                            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-slate-950/84 via-slate-900/18 to-transparent" />
                             <div className="pointer-events-none absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-sky-200/65 via-sky-100/10 to-transparent" />
 
                             <div className="absolute left-5 right-5 top-5 flex items-start justify-between gap-4">
@@ -324,7 +349,7 @@ export default function HomePage() {
 
                             <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
                               <p className="text-[10px] uppercase tracking-[0.28em] text-white/60">Wanda Event</p>
-                              <h3 className="mt-3 text-2xl font-semibold leading-tight tracking-tight drop-shadow-sm">
+                              <h3 className="mt-3 text-[1.65rem] font-semibold leading-tight tracking-tight drop-shadow-sm">
                                 {project.title}
                               </h3>
                               <p className="mt-3 text-sm text-white/78">
@@ -335,7 +360,6 @@ export default function HomePage() {
                         </div>
                       </Link>
                     </motion.article>
-
                   );
                 })}
               </div>
@@ -343,14 +367,14 @@ export default function HomePage() {
           </div>
 
           {!loadingFeatured && featuredProjects.length > 0 && (
-            <div className="mt-8 flex justify-center">
+            <div className="mt-10 flex justify-center">
               <Link
+                id="home-featured-view-all-projects"
                 href="/projects"
                 className="tap-target-comfort touch-manipulation inline-flex items-center justify-center rounded-full border border-primary/12 bg-primary px-7 py-4 text-center text-[11px] font-semibold uppercase tracking-[0.2em] text-on-primary shadow-[0_24px_60px_-28px_rgba(0,17,58,0.42)] transition-all duration-300 active:scale-[0.98] hover:-translate-y-1 hover:bg-primary-container"
               >
                 Xem tất cả dự án
               </Link>
-
             </div>
           )}
         </div>
