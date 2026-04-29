@@ -45,3 +45,16 @@ Thumbs.db
 # Local scratch / temp
 .tmp/
 tmp/
+
+# Local AI/agent tooling artifacts
+.agents/
+stitch-skills/
+stitch-designs/
+.mcp.json
+skills-lock.json
+backend/*.backup.md
+*_OPENCLAW_SETUP.md
+ZALO_QUICK_SETUP.md
+ZALO_BOT_SETUP.md
+ZALO_BOT_MODULE_REPORT.md
+ZALO_INTEGRATION_COMPLETE.md
