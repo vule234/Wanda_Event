@@ -1,4 +1,4 @@
-# Mercury Wanda – Tổng quan dự án (README mới nhất)
+# Mercury Wanda – Tổng quan dự án 
 
 > Nền tảng website + CMS quản trị cho dịch vụ tổ chức sự kiện cao cấp Mercury Wanda.
 
