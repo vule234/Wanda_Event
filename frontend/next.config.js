@@ -1,3 +1,17 @@
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+
+function getSupabaseHostname() {
+  if (!supabaseUrl) return null;
+
+  try {
+    return new URL(supabaseUrl).hostname;
+  } catch {
+    return null;
+  }
+}
+
+const supabaseHostname = getSupabaseHostname();
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
@@ -14,10 +28,14 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'images.pexels.com',
       },
-      {
-        protocol: 'https',
-        hostname: 'znkvizblryesyrsockty.supabase.co',
-      },
+      ...(supabaseHostname
+        ? [
+            {
+              protocol: 'https',
+              hostname: supabaseHostname,
+            },
+          ]
+        : []),
       {
         protocol: 'https',
         hostname: 'scontent.fdad1-1.fna.fbcdn.net',

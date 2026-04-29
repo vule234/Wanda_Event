@@ -43,7 +43,7 @@ export const Header = () => {
             <span className="relative flex h-12 items-center gap-3 overflow-hidden rounded-full border border-white/70 bg-white/80 pl-1.5 pr-4 shadow-[0_18px_34px_-24px_rgba(0,17,58,0.38)] ring-1 ring-[rgba(255,255,255,0.45)] transition-all duration-300 group-hover:-translate-y-0.5 group-hover:shadow-[0_20px_40px_-24px_rgba(0,17,58,0.44)] sm:h-[3.35rem] sm:pr-5">
               <span className="relative h-9 w-9 shrink-0 overflow-hidden rounded-full border border-white/70 bg-white shadow-[0_12px_24px_-18px_rgba(0,17,58,0.4)] sm:h-10 sm:w-10">
                 <Image
-                  src="https://znkvizblryesyrsockty.supabase.co/storage/v1/object/public/images/wanda.jpg"
+                  src="/wanda.jpg"
                   alt="Wanda Event logo"
                   fill
                   className="object-cover"

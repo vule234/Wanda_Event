@@ -3,8 +3,7 @@
 import { motion } from 'framer-motion';
 import Link from 'next/link';
 
-const BANNER_URL =
-  'https://znkvizblryesyrsockty.supabase.co/storage/v1/object/public/album-images/about/banner.jpg';
+const BANNER_URL = '/banner.jpg';
 
 const PHILOSOPHY_ITEMS = [
   {
