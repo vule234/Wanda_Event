@@ -45,6 +45,8 @@ Thumbs.db
 # Local scratch / temp
 .tmp/
 tmp/
+album/
+album_cuoi/
 
 # Local AI/agent tooling artifacts
 .agents/

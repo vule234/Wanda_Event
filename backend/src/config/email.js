@@ -1,6 +1,13 @@
 const sgMail = require('@sendgrid/mail');
 
-sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const sendgridApiKey = process.env.SENDGRID_API_KEY;
+const isSendGridConfigured = Boolean(sendgridApiKey && sendgridApiKey.startsWith('SG.'));
+
+if (isSendGridConfigured) {
+  sgMail.setApiKey(sendgridApiKey);
+} else if (process.env.NODE_ENV === 'production') {
+  console.warn('[Email] SENDGRID_API_KEY is not configured correctly. Email notifications will be skipped.');
+}
 
 /**
  * Email template base styles
@@ -46,6 +53,11 @@ const footerStyles = `
  */
 async function sendEmail({ to, subject, html }) {
   try {
+    if (!isSendGridConfigured) {
+      console.warn(`[Email] Skipped "${subject}" because SendGrid is not configured.`);
+      return false;
+    }
+
     // Validate email
     if (!to || !to.includes('@')) {
       throw new Error('Invalid recipient email');
